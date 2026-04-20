@@ -169,7 +169,29 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          {/* Search bar */}
+          <div className="mt-10 max-w-xl mx-auto relative">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+            <Input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by brand, type or size — e.g. Tirupati 15 kg, Ghee, Mustard…"
+              className="h-14 rounded-full pl-14 pr-14 text-base bg-card shadow-card border-border focus-visible:ring-primary"
+              aria-label="Search products"
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute right-4 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-full hover:bg-secondary text-muted-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {categories.map((c) => (
               <button
                 key={c}
