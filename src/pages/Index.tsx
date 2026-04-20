@@ -61,6 +61,12 @@ const Index = () => {
   const [cat, setCat] = useState("All");
   const [brand, setBrand] = useState("All Brands");
   const [query, setQuery] = useState("");
+  const { add } = useCart();
+
+  const handleAdd = (p: Product) => {
+    add({ id: p.id, name: p.name, brand: p.brand, size: p.size, price: p.price, img: p.img });
+    toast({ title: "Added to cart", description: `${p.name} • ${p.size}` });
+  };
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -97,11 +103,14 @@ const Index = () => {
             <a href="#about" className="hover:text-primary transition-colors">About</a>
             <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
           </nav>
-          <a href={WA_LINK} target="_blank" rel="noreferrer">
-            <Button variant="whatsapp" size="lg" className="hidden sm:inline-flex">
-              <MessageCircle className="h-4 w-4" /> Order via WhatsApp
-            </Button>
-          </a>
+          <div className="flex items-center gap-3">
+            <CartDrawer />
+            <a href={WA_LINK} target="_blank" rel="noreferrer">
+              <Button variant="whatsapp" size="lg" className="hidden sm:inline-flex">
+                <MessageCircle className="h-4 w-4" /> Order via WhatsApp
+              </Button>
+            </a>
+          </div>
         </div>
       </header>
 
@@ -256,16 +265,20 @@ const Index = () => {
                   </div>
                   <span className="font-display text-xl font-bold whitespace-nowrap">{p.price}</span>
                 </div>
-                <a
-                  href={`${WA_LINK}%20-%20${encodeURIComponent(p.name)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 block"
-                >
-                  <Button variant="whatsapp" className="w-full">
-                    <MessageCircle className="h-4 w-4" /> Order on WhatsApp
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  <Button variant="hero" onClick={() => handleAdd(p)} className="w-full">
+                    <Plus className="h-4 w-4" /> Add
                   </Button>
-                </a>
+                  <a
+                    href={`${WA_LINK}%20-%20${encodeURIComponent(p.name)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Button variant="whatsapp" className="w-full">
+                      <MessageCircle className="h-4 w-4" /> Order
+                    </Button>
+                  </a>
+                </div>
               </motion.article>
             ))}
             {filtered.length === 0 && (
