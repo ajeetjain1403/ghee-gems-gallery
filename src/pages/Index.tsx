@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X } from "lucide-react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import heroOil from "@/assets/hero-oil.jpg";
 import store from "@/assets/store.jpg";
 import pCotton from "@/assets/product-cottonseed.jpg";
@@ -13,13 +14,41 @@ import pGhee from "@/assets/product-ghee.jpg";
 const PHONE = "+919876543210";
 const WA_LINK = `https://wa.me/919876543210?text=${encodeURIComponent("Hi Mahaveer Marketing, I want to place an order")}`;
 
-const products = [
-  { id: 1, name: "Tirupati Cotton Seed Oil", brand: "Tirupati", category: "Oils", size: "15 kg Tin", price: "₹2,250", img: pCotton },
-  { id: 2, name: "Gulab Groundnut Oil", brand: "Gulab", category: "Oils", size: "5 L Jar", price: "₹950", img: pGroundnut },
-  { id: 3, name: "Fortune Corn Oil", brand: "Fortune", category: "Oils", size: "1 L Bottle", price: "₹185", img: pCorn },
-  { id: 4, name: "Tirupati Sunflower Oil", brand: "Tirupati", category: "Oils", size: "1 L Pouch", price: "₹160", img: pSunflower },
-  { id: 5, name: "Pure Desi Ghee", brand: "Gulab", category: "Ghee", size: "1 kg Jar", price: "₹650", img: pGhee },
-  { id: 6, name: "Premium Cow Ghee", brand: "Fortune", category: "Ghee", size: "500 g Jar", price: "₹360", img: pGhee },
+type Product = {
+  id: number;
+  name: string;
+  brand: "Tirupati" | "Gulab" | "Fortune";
+  category: "Oils" | "Ghee";
+  type: string;
+  size: string;
+  price: string;
+  img: string;
+};
+
+const products: Product[] = [
+  // Tirupati (Kadi & Kalol units — known for cotton seed & groundnut)
+  { id: 1, name: "Tirupati Kadi Cotton Seed Oil Tin", brand: "Tirupati", category: "Oils", type: "Cotton Seed", size: "15 kg Tin", price: "₹2,280", img: pCotton },
+  { id: 2, name: "Tirupati Kalol Cotton Seed Oil Tin", brand: "Tirupati", category: "Oils", type: "Cotton Seed", size: "15 kg Tin", price: "₹2,260", img: pCotton },
+  { id: 3, name: "Tirupati Cotton Seed Oil Pouch", brand: "Tirupati", category: "Oils", type: "Cotton Seed", size: "1 L Pouch", price: "₹165", img: pSunflower },
+  { id: 4, name: "Tirupati Groundnut Oil Tin", brand: "Tirupati", category: "Oils", type: "Groundnut", size: "15 kg Tin", price: "₹3,150", img: pGroundnut },
+  { id: 5, name: "Tirupati Sunflower Oil Pouch", brand: "Tirupati", category: "Oils", type: "Sunflower", size: "1 L Pouch", price: "₹155", img: pSunflower },
+
+  // Gulab
+  { id: 6, name: "Gulab Refined Groundnut Oil Jar", brand: "Gulab", category: "Oils", type: "Groundnut", size: "5 L Jar", price: "₹1,050", img: pGroundnut },
+  { id: 7, name: "Gulab Filtered Groundnut Oil Tin", brand: "Gulab", category: "Oils", type: "Groundnut", size: "15 kg Tin", price: "₹3,100", img: pGroundnut },
+  { id: 8, name: "Gulab Cotton Seed Oil Jar", brand: "Gulab", category: "Oils", type: "Cotton Seed", size: "5 L Jar", price: "₹820", img: pCotton },
+  { id: 9, name: "Gulab Pure Cow Ghee Jar", brand: "Gulab", category: "Ghee", type: "Cow Ghee", size: "1 L Jar", price: "₹680", img: pGhee },
+  { id: 10, name: "Gulab Pure Cow Ghee Tin", brand: "Gulab", category: "Ghee", type: "Cow Ghee", size: "5 L Tin", price: "₹3,300", img: pGhee },
+
+  // Fortune (Adani Wilmar)
+  { id: 11, name: "Fortune Sunlite Refined Sunflower Oil", brand: "Fortune", category: "Oils", type: "Sunflower", size: "1 L Pouch", price: "₹150", img: pSunflower },
+  { id: 12, name: "Fortune Sunlite Sunflower Oil Jar", brand: "Fortune", category: "Oils", type: "Sunflower", size: "5 L Jar", price: "₹720", img: pSunflower },
+  { id: 13, name: "Fortune Kachi Ghani Mustard Oil", brand: "Fortune", category: "Oils", type: "Mustard", size: "1 L Pouch", price: "₹175", img: pGroundnut },
+  { id: 14, name: "Fortune Rice Bran Health Oil", brand: "Fortune", category: "Oils", type: "Rice Bran", size: "1 L Pouch", price: "₹165", img: pCorn },
+  { id: 15, name: "Fortune Soya Health Refined Oil", brand: "Fortune", category: "Oils", type: "Soyabean", size: "1 L Pouch", price: "₹145", img: pCorn },
+  { id: 16, name: "Fortune Xpert Pro Corn Oil", brand: "Fortune", category: "Oils", type: "Corn", size: "1 L Bottle", price: "₹190", img: pCorn },
+  { id: 17, name: "Fortune Premium Cow Ghee Jar", brand: "Fortune", category: "Ghee", type: "Cow Ghee", size: "1 L Jar", price: "₹670", img: pGhee },
+  { id: 18, name: "Fortune Premium Cow Ghee Pouch", brand: "Fortune", category: "Ghee", type: "Cow Ghee", size: "500 ml Pouch", price: "₹345", img: pGhee },
 ];
 
 const brands = ["All Brands", "Tirupati", "Gulab", "Fortune"];
@@ -28,10 +57,22 @@ const categories = ["All", "Oils", "Ghee"];
 const Index = () => {
   const [cat, setCat] = useState("All");
   const [brand, setBrand] = useState("All Brands");
+  const [query, setQuery] = useState("");
 
-  const filtered = products.filter(
-    (p) => (cat === "All" || p.category === cat) && (brand === "All Brands" || p.brand === brand),
-  );
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return products.filter((p) => {
+      if (cat !== "All" && p.category !== cat) return false;
+      if (brand !== "All Brands" && p.brand !== brand) return false;
+      if (!q) return true;
+      return (
+        p.name.toLowerCase().includes(q) ||
+        p.brand.toLowerCase().includes(q) ||
+        p.type.toLowerCase().includes(q) ||
+        p.size.toLowerCase().includes(q)
+      );
+    });
+  }, [cat, brand, query]);
 
   return (
     <div className="min-h-screen bg-background">
