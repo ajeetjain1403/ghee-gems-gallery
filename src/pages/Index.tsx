@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X } from "lucide-react";
+import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CartDrawer } from "@/components/CartDrawer";
+import { useCart } from "@/hooks/use-cart";
+import { toast } from "@/hooks/use-toast";
 import heroOil from "@/assets/hero-oil.jpg";
 import store from "@/assets/store.jpg";
 import pCotton from "@/assets/product-cottonseed.jpg";
