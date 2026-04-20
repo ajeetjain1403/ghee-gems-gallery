@@ -221,7 +221,11 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <p className="mt-8 text-center text-sm text-muted-foreground">
+            Showing <span className="font-semibold text-foreground">{filtered.length}</span> of {products.length} products
+          </p>
+
+          <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((p, i) => (
               <motion.article
                 key={p.id}
@@ -262,9 +266,15 @@ const Index = () => {
               </motion.article>
             ))}
             {filtered.length === 0 && (
-              <p className="col-span-full text-center text-muted-foreground py-16">
-                No products found for this filter.
-              </p>
+              <div className="col-span-full text-center py-16">
+                <p className="text-muted-foreground">No products match your search or filters.</p>
+                <button
+                  onClick={() => { setQuery(""); setCat("All"); setBrand("All Brands"); }}
+                  className="mt-4 text-primary font-medium hover:underline"
+                >
+                  Clear all filters
+                </button>
+              </div>
             )}
           </div>
         </div>
