@@ -208,49 +208,91 @@ const Index = () => {
           </p>
 
           <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((p, i) => (
-              <motion.article
-                key={p.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="group rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all hover:-translate-y-1"
-              >
-                <div className="aspect-square overflow-hidden rounded-2xl bg-secondary">
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    loading="lazy"
-                    width={768}
-                    height={768}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="mt-5 flex items-start justify-between gap-3">
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-primary">{p.brand}</span>
-                    <h3 className="mt-1 font-display text-xl font-semibold leading-tight">{p.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{p.size}</p>
+            {filtered.map((p, i) => {
+              const cardBadges = getProductBadges(p);
+              const benefit = benefitByType[p.type] ?? "Pure & wholesome goodness";
+              const isBestSeller = BEST_SELLER_IDS.has(p.id);
+              return (
+                <motion.article
+                  key={p.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.05 }}
+                  className="group flex flex-col rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
+                    {isBestSeller && (
+                      <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-primary text-primary-foreground px-3 py-1 text-[11px] font-semibold shadow-soft">
+                        <Sparkles className="h-3 w-3" /> Best Seller
+                      </span>
+                    )}
+                    <span className="absolute top-3 right-3 z-10 rounded-full bg-card/95 backdrop-blur px-2.5 py-1 text-[11px] font-semibold text-foreground shadow-soft">
+                      {p.size}
+                    </span>
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      loading="lazy"
+                      width={768}
+                      height={768}
+                      className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    />
                   </div>
-                  <span className="font-display text-xl font-bold whitespace-nowrap">{p.price}</span>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                  <Button variant="hero" onClick={() => handleAdd(p)} className="w-full">
-                    <Plus className="h-4 w-4" /> Add
-                  </Button>
-                  <a
-                    href={`${WA_LINK}%20-%20${encodeURIComponent(p.name)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Button variant="whatsapp" className="w-full">
-                      <MessageCircle className="h-4 w-4" /> Order
+
+                  <div className="mt-5 flex items-center justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-primary">{p.brand}</span>
+                    <span className="text-[11px] font-medium text-muted-foreground">{p.category}</span>
+                  </div>
+
+                  <h3 className="mt-2 font-display text-lg font-semibold leading-snug line-clamp-2 min-h-[3.25rem]">
+                    {p.name}
+                  </h3>
+
+                  <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+                    <Leaf className="h-3.5 w-3.5 text-primary shrink-0" />
+                    <span className="line-clamp-1">{benefit}</span>
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {cardBadges.map((b) => (
+                      <span
+                        key={b.label}
+                        className="inline-flex items-center gap-1 rounded-full bg-secondary text-secondary-foreground px-2.5 py-1 text-[10.5px] font-medium border border-border/60"
+                      >
+                        <b.icon className="h-3 w-3 text-primary" />
+                        {b.label}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 flex items-end justify-between border-t border-border/60 pt-4">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Price</p>
+                      <p className="font-display text-2xl font-bold leading-none mt-1">{p.price}</p>
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-primary">
+                      <Zap className="h-3.5 w-3.5" /> In Stock
+                    </span>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-2">
+                    <Button variant="hero" onClick={() => handleAdd(p)} className="w-full">
+                      <Plus className="h-4 w-4" /> Add to Cart
                     </Button>
-                  </a>
-                </div>
-              </motion.article>
-            ))}
+                    <a
+                      href={`${WA_LINK}%20-%20${encodeURIComponent(p.name)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Button variant="outline-hero" className="w-full">
+                        Buy Now <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </a>
+                  </div>
+                </motion.article>
+              );
+            })}
             {filtered.length === 0 && (
               <div className="col-span-full text-center py-16">
                 <p className="text-muted-foreground">No products match your search or filters.</p>
