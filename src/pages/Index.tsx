@@ -14,8 +14,8 @@ import pCorn from "@/assets/product-corn.jpg";
 import pSunflower from "@/assets/product-sunflower.jpg";
 import pGhee from "@/assets/product-ghee.jpg";
 
-const PHONE = "+919876543210";
-const WA_LINK = `https://wa.me/919876543210?text=${encodeURIComponent("Hi Mahaveer Marketing, I want to place an order")}`;
+const PHONE = "+919512983111";
+const WA_LINK = `https://wa.me/919512983111?text=${encodeURIComponent("Hi Mahaveer Marketing, I want to place an order")}`;
 
 type Product = {
   id: number;
