@@ -4,9 +4,9 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CartDrawer } from "@/components/CartDrawer";
+import { HeroSlider } from "@/components/HeroSlider";
 import { useCart } from "@/hooks/use-cart";
 import { toast } from "@/hooks/use-toast";
-import heroOil from "@/assets/hero-oil.jpg";
 import store from "@/assets/store.jpg";
 import pCotton from "@/assets/product-cottonseed.jpg";
 import pGroundnut from "@/assets/product-groundnut.jpg";
@@ -115,60 +115,7 @@ const Index = () => {
       </header>
 
       {/* Hero */}
-      <section id="home" className="relative overflow-hidden bg-gradient-hero">
-        <div className="container grid lg:grid-cols-2 gap-12 items-center py-20 lg:py-28">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card px-4 py-2 text-sm font-medium text-primary shadow-card">
-              <ShieldCheck className="h-4 w-4" /> 18+ Years of Trust
-            </span>
-            <h1 className="mt-6 font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] text-balance">
-              Premium Quality{" "}
-              <span className="text-primary italic">Edible Oils & Ghee</span>
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              Your trusted destination for premium cooking oils from top brands —
-              Tirupati, Gulab, Fortune. Serving healthy homes since 18+ years.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a href="#products"><Button size="lg" variant="hero">Shop Now <ArrowRight className="h-4 w-4" /></Button></a>
-              <a href={`tel:${PHONE}`}><Button size="lg" variant="outline-hero"><Phone className="h-4 w-4" /> Call Us</Button></a>
-            </div>
-            <dl className="mt-12 grid grid-cols-3 gap-6 max-w-md">
-              {[
-                { v: "18+", l: "Years Experience" },
-                { v: "1000+", l: "Happy Customers" },
-                { v: "15+", l: "Products" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <dt className="font-display text-3xl md:text-4xl font-bold text-primary">{s.v}</dt>
-                  <dd className="text-xs text-muted-foreground mt-1">{s.l}</dd>
-                </div>
-              ))}
-            </dl>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="relative"
-          >
-            <div className="absolute -top-6 -right-4 h-32 w-32 rounded-3xl bg-primary/15 animate-float" />
-            <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-3xl bg-accent/60 animate-float [animation-delay:1.5s]" />
-            <img
-              src={heroOil}
-              alt="Golden cooking oil pouring into a container"
-              width={1280}
-              height={960}
-              className="relative rounded-3xl shadow-elevated w-full aspect-[4/3] object-cover -rotate-2"
-            />
-          </motion.div>
-        </div>
-      </section>
+      <HeroSlider />
 
       {/* Products */}
       <section id="products" className="py-20 lg:py-28">
