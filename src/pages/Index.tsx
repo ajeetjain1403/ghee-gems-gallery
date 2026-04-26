@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CartDrawer } from "@/components/CartDrawer";
+import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
 import { HeroSlider } from "@/components/HeroSlider";
 import { useCart } from "@/hooks/use-cart";
 import { toast } from "@/hooks/use-toast";
@@ -280,15 +281,20 @@ const Index = () => {
                     <Button variant="hero" onClick={() => handleAdd(p)} className="w-full">
                       <Plus className="h-4 w-4" /> Add to Cart
                     </Button>
-                    <a
-                      href={`${WA_LINK}%20-%20${encodeURIComponent(p.name)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Button variant="outline-hero" className="w-full">
-                        Buy Now <ArrowRight className="h-4 w-4" />
-                      </Button>
-                    </a>
+                    <CustomerDetailsDialog
+                      title={`Buy Now — ${p.name}`}
+                      description="Enter your delivery details and we'll send this order to WhatsApp."
+                      buildOrderLines={() => [
+                        `1. ${p.name} (${p.size}) — 1 × ${p.price}`,
+                        "",
+                        `Subtotal: ${p.price}`,
+                      ]}
+                      trigger={
+                        <Button variant="outline-hero" className="w-full">
+                          Buy Now <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      }
+                    />
                   </div>
                 </motion.article>
               );

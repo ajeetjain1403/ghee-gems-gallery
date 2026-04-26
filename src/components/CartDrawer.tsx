@@ -2,34 +2,18 @@ import { Minus, Plus, ShoppingBag, Trash2, MessageCircle, X } from "lucide-react
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useCart, formatINR } from "@/hooks/use-cart";
-
-const PHONE_DIGITS = "919876543210";
-
-const buildWhatsAppMessage = (
-  items: ReturnType<typeof useCart>["items"],
-  subtotal: number,
-) => {
-  const lines = [
-    "Hi Mahaveer Marketing, I'd like to place this order:",
-    "",
-    ...items.map(
-      (i, idx) =>
-        `${idx + 1}. ${i.name} (${i.size}) — ${i.qty} × ${i.price}`,
-    ),
-    "",
-    `Subtotal: ${formatINR(subtotal)}`,
-    "",
-    "Please confirm availability and delivery. Thank you!",
-  ];
-  return lines.join("\n");
-};
+import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
 
 export const CartDrawer = () => {
   const { items, count, subtotal, setQty, remove, clear } = useCart();
 
-  const checkoutHref = `https://wa.me/${PHONE_DIGITS}?text=${encodeURIComponent(
-    buildWhatsAppMessage(items, subtotal),
-  )}`;
+  const buildOrderLines = () => [
+    ...items.map(
+      (i, idx) => `${idx + 1}. ${i.name} (${i.size}) — ${i.qty} × ${i.price}`,
+    ),
+    "",
+    `Subtotal: ${formatINR(subtotal)}`,
+  ];
 
   return (
     <Sheet>
@@ -132,11 +116,17 @@ export const CartDrawer = () => {
               <p className="text-xs text-muted-foreground">
                 Final total confirmed on WhatsApp. Free delivery on orders above ₹500.
               </p>
-              <a href={checkoutHref} target="_blank" rel="noreferrer" className="block">
-                <Button variant="whatsapp" size="lg" className="w-full">
-                  <MessageCircle className="h-4 w-4" /> Checkout on WhatsApp
-                </Button>
-              </a>
+              <CustomerDetailsDialog
+                buildOrderLines={buildOrderLines}
+                onSubmitted={clear}
+                title="Delivery Details"
+                description="Tell us where to deliver — your full order will be sent to WhatsApp with these details."
+                trigger={
+                  <Button variant="whatsapp" size="lg" className="w-full">
+                    <MessageCircle className="h-4 w-4" /> Checkout on WhatsApp
+                  </Button>
+                }
+              />
             </div>
           </>
         )}
