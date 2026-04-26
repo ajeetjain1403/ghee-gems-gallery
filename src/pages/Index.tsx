@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X, Plus } from "lucide-react";
+import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X, Plus, Leaf, Sparkles, Zap } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
