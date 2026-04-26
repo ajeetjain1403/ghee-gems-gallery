@@ -13,6 +13,7 @@ import pGroundnut from "@/assets/product-groundnut.jpg";
 import pCorn from "@/assets/product-corn.jpg";
 import pSunflower from "@/assets/product-sunflower.jpg";
 import pGhee from "@/assets/product-ghee.jpg";
+import Navbar from "@/components/ui/navbar";
 
 const PHONE = "+919512983111";
 const WA_LINK = `https://wa.me/919512983111?text=${encodeURIComponent("Hi Mahaveer Marketing, I want to place an order")}`;
@@ -86,7 +87,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/60">
+      {/* <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/60">
         <div className="container flex items-center justify-between py-4">
           <a href="#home" className="flex items-center gap-3">
             <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground shadow-soft">
@@ -112,8 +113,9 @@ const Index = () => {
             </a>
           </div>
         </div>
-      </header>
+      </header> */}
 
+      <Navbar />
       {/* Hero */}
       <HeroSlider />
 
@@ -155,11 +157,10 @@ const Index = () => {
               <button
                 key={c}
                 onClick={() => setCat(c)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                  cat === c
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${cat === c
                     ? "bg-primary text-primary-foreground shadow-soft"
                     : "bg-card text-foreground hover:bg-secondary border border-border"
-                }`}
+                  }`}
               >
                 {c}
               </button>
@@ -169,11 +170,10 @@ const Index = () => {
               <button
                 key={b}
                 onClick={() => setBrand(b)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                  brand === b
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${brand === b
                     ? "bg-foreground text-background"
                     : "bg-card text-foreground hover:bg-secondary border border-border"
-                }`}
+                  }`}
               >
                 {b}
               </button>
