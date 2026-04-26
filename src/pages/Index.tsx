@@ -59,6 +59,28 @@ const products: Product[] = [
 const brands = ["All Brands", "Tirupati", "Gulab", "Fortune"];
 const categories = ["All", "Oils", "Ghee"];
 
+const BEST_SELLER_IDS = new Set([1, 4, 9, 11, 13]);
+
+const benefitByType: Record<string, string> = {
+  "Cotton Seed": "Light & heart-friendly for daily cooking",
+  "Groundnut": "Rich in MUFA & natural antioxidants",
+  "Sunflower": "High in Vitamin E for healthy skin",
+  "Mustard": "Boosts immunity • Rich in Omega-3",
+  "Rice Bran": "Lowers cholesterol • Oryzanol rich",
+  "Soyabean": "Plant protein & Omega-3 goodness",
+  "Corn": "Heart-healthy with natural Vitamin E",
+  "Cow Ghee": "Pure A2 nutrition • Rich in Vitamin A",
+};
+
+const getProductBadges = (p: Product) => {
+  const badges: { label: string; icon: typeof Leaf }[] = [];
+  if (BEST_SELLER_IDS.has(p.id)) badges.push({ label: "Best Seller", icon: Sparkles });
+  if (p.category === "Oils" && (p.type === "Groundnut" || p.type === "Mustard" || p.type === "Cotton Seed"))
+    badges.push({ label: "Cold Pressed", icon: Droplet });
+  badges.push({ label: "Chemical-Free", icon: Leaf });
+  return badges.slice(0, 3);
+};
+
 const Index = () => {
   const [cat, setCat] = useState("All");
   const [brand, setBrand] = useState("All Brands");
