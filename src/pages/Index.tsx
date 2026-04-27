@@ -161,8 +161,8 @@ const Index = () => {
           <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((p, i) => {
               const cardBadges = getProductBadges(p);
-              const benefit = benefitByType[p.type] ?? "Pure & wholesome goodness";
-              const isBestSeller = BEST_SELLER_IDS.has(p.id);
+              const benefit = p.benefit;
+              const isBestSeller = p.isBestSeller;
               return (
                 <motion.article
                   key={p.id}
