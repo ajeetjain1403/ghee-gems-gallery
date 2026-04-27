@@ -15,66 +15,20 @@ import logo from "@/assets/logo.png";
 const PHONE = "+919512983111";
 const WA_LINK = `https://wa.me/919512983111?text=${encodeURIComponent("Hi Mahaveer Marketing, I want to place an order")}`;
 
-type Product = {
-  id: number;
-  name: string;
-  brand: "Tirupati" | "Gulab" | "Fortune";
-  category: "Oils" | "Ghee";
-  type: string;
-  size: string;
-  price: string;
-  img: string;
-};
-
-const products: Product[] = [
-  // Tirupati (Kadi & Kalol units — known for cotton seed & groundnut)
-  { id: 1, name: "Tirupati Kadi Cotton Seed Oil Tin", brand: "Tirupati", category: "Oils", type: "Cotton Seed", size: "15 kg Tin", price: "₹2,280", img: pCotton },
-  { id: 2, name: "Tirupati Kalol Cotton Seed Oil Tin", brand: "Tirupati", category: "Oils", type: "Cotton Seed", size: "15 kg Tin", price: "₹2,260", img: pCotton },
-  { id: 3, name: "Tirupati Cotton Seed Oil Pouch", brand: "Tirupati", category: "Oils", type: "Cotton Seed", size: "1 L Pouch", price: "₹165", img: pSunflower },
-  { id: 4, name: "Tirupati Groundnut Oil Tin", brand: "Tirupati", category: "Oils", type: "Groundnut", size: "15 kg Tin", price: "₹3,150", img: pGroundnut },
-  { id: 5, name: "Tirupati Sunflower Oil Pouch", brand: "Tirupati", category: "Oils", type: "Sunflower", size: "1 L Pouch", price: "₹155", img: pSunflower },
-
-  // Gulab
-  { id: 6, name: "Gulab Refined Groundnut Oil Jar", brand: "Gulab", category: "Oils", type: "Groundnut", size: "5 L Jar", price: "₹1,050", img: pGroundnut },
-  { id: 7, name: "Gulab Filtered Groundnut Oil Tin", brand: "Gulab", category: "Oils", type: "Groundnut", size: "15 kg Tin", price: "₹3,100", img: pGroundnut },
-  { id: 8, name: "Gulab Cotton Seed Oil Jar", brand: "Gulab", category: "Oils", type: "Cotton Seed", size: "5 L Jar", price: "₹820", img: pCotton },
-  { id: 9, name: "Gulab Pure Cow Ghee Jar", brand: "Gulab", category: "Ghee", type: "Cow Ghee", size: "1 L Jar", price: "₹680", img: pGhee },
-  { id: 10, name: "Gulab Pure Cow Ghee Tin", brand: "Gulab", category: "Ghee", type: "Cow Ghee", size: "5 L Tin", price: "₹3,300", img: pGhee },
-
-  // Fortune (Adani Wilmar)
-  { id: 11, name: "Fortune Sunlite Refined Sunflower Oil", brand: "Fortune", category: "Oils", type: "Sunflower", size: "1 L Pouch", price: "₹150", img: pSunflower },
-  { id: 12, name: "Fortune Sunlite Sunflower Oil Jar", brand: "Fortune", category: "Oils", type: "Sunflower", size: "5 L Jar", price: "₹720", img: pSunflower },
-  { id: 13, name: "Fortune Kachi Ghani Mustard Oil", brand: "Fortune", category: "Oils", type: "Mustard", size: "1 L Pouch", price: "₹175", img: pGroundnut },
-  { id: 14, name: "Fortune Rice Bran Health Oil", brand: "Fortune", category: "Oils", type: "Rice Bran", size: "1 L Pouch", price: "₹165", img: pCorn },
-  { id: 15, name: "Fortune Soya Health Refined Oil", brand: "Fortune", category: "Oils", type: "Soyabean", size: "1 L Pouch", price: "₹145", img: pCorn },
-  { id: 16, name: "Fortune Xpert Pro Corn Oil", brand: "Fortune", category: "Oils", type: "Corn", size: "1 L Bottle", price: "₹190", img: pCorn },
-  { id: 17, name: "Fortune Premium Cow Ghee Jar", brand: "Fortune", category: "Ghee", type: "Cow Ghee", size: "1 L Jar", price: "₹670", img: pGhee },
-  { id: 18, name: "Fortune Premium Cow Ghee Pouch", brand: "Fortune", category: "Ghee", type: "Cow Ghee", size: "500 ml Pouch", price: "₹345", img: pGhee },
-];
-
 const brands = ["All Brands", "Tirupati", "Gulab", "Fortune"];
 const categories = ["All", "Oils", "Ghee"];
 
-const BEST_SELLER_IDS = new Set([1, 4, 9, 11, 13]);
-
-const benefitByType: Record<string, string> = {
-  "Cotton Seed": "Light & heart-friendly for daily cooking",
-  "Groundnut": "Rich in MUFA & natural antioxidants",
-  "Sunflower": "High in Vitamin E for healthy skin",
-  "Mustard": "Boosts immunity • Rich in Omega-3",
-  "Rice Bran": "Lowers cholesterol • Oryzanol rich",
-  "Soyabean": "Plant protein & Omega-3 goodness",
-  "Corn": "Heart-healthy with natural Vitamin E",
-  "Cow Ghee": "Pure A2 nutrition • Rich in Vitamin A",
+const BADGE_ICONS: Record<string, typeof Leaf> = {
+  "Best Seller": Sparkles,
+  "Cold Pressed": Droplet,
+  "Chemical-Free": Leaf,
 };
 
 const getProductBadges = (p: Product) => {
-  const badges: { label: string; icon: typeof Leaf }[] = [];
-  if (BEST_SELLER_IDS.has(p.id)) badges.push({ label: "Best Seller", icon: Sparkles });
-  if (p.category === "Oils" && (p.type === "Groundnut" || p.type === "Mustard" || p.type === "Cotton Seed"))
-    badges.push({ label: "Cold Pressed", icon: Droplet });
-  badges.push({ label: "Chemical-Free", icon: Leaf });
-  return badges.slice(0, 3);
+  const labels: string[] = [];
+  if (p.isBestSeller) labels.push("Best Seller");
+  for (const b of p.badges) if (!labels.includes(b)) labels.push(b);
+  return labels.slice(0, 3).map((label) => ({ label, icon: BADGE_ICONS[label] ?? Leaf }));
 };
 
 const Index = () => {
