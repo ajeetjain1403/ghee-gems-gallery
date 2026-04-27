@@ -158,6 +158,12 @@ const Index = () => {
             Showing <span className="font-semibold text-foreground">{filtered.length}</span> of {products.length} products
           </p>
 
+          {isLoading && (
+            <div className="mt-10 flex justify-center">
+              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+            </div>
+          )}
+
           <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((p, i) => {
               const cardBadges = getProductBadges(p);
