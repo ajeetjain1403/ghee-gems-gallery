@@ -397,7 +397,7 @@ const Index = () => {
               {
                 icon: Phone,
                 title: "Call Us",
-                desc: "+91 98765 43210",
+                desc: "+91 ${PHONE}",
                 cta: "Call Now",
                 href: `tel:${PHONE}`,
                 tone: "primary",

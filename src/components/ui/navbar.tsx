@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Droplet, Search, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CartDrawer } from "../CartDrawer";
+import logo from "@/assets/logo.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,12 +26,13 @@ export default function Navbar() {
         >
           {/* Logo */}
           <a href="#home" className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-green-700 text-white">
-              <Droplet className="h-5 w-5" />
-            </span>
-            <span className="hidden sm:block text-sm font-semibold text-green-900">
-              MAHAVEER
-            </span>
+           
+   <img
+              src={logo}
+              width={100}
+              height={100}
+              className="object-cover"
+            />
           </a>
 
           {/* Desktop Nav */}
