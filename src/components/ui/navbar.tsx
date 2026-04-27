@@ -24,17 +24,17 @@ export default function Navbar() {
         style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
       >
         <div
-          className={`flex items-center justify-between rounded-full border transition-all duration-300 ease-out ${
+          className={`flex items-center justify-between rounded-full border transition-all duration-500 ease-out ${
             scrolled ? "py-2 pl-3 pr-2" : "py-2.5 pl-4 pr-2.5"
           }`}
           style={{
-            backgroundColor: "rgba(245, 241, 233, 0.72)",
-            backdropFilter: "blur(20px) saturate(160%)",
-            WebkitBackdropFilter: "blur(20px) saturate(160%)",
-            borderColor: "rgba(255, 255, 255, 0.55)",
+            backgroundColor: "rgba(248, 244, 237, 0.65)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
+            borderColor: "rgba(255, 255, 255, 0.4)",
             boxShadow: scrolled
-              ? "0 12px 40px -12px rgba(20, 50, 30, 0.25), 0 2px 8px -2px rgba(20, 50, 30, 0.08)"
-              : "0 18px 50px -16px rgba(20, 50, 30, 0.28), 0 4px 12px -4px rgba(20, 50, 30, 0.10)",
+              ? "0 8px 28px -14px rgba(20, 50, 30, 0.18)"
+              : "0 12px 36px -18px rgba(20, 50, 30, 0.20)",
           }}
         >
           {/* Logo */}
@@ -56,7 +56,7 @@ export default function Navbar() {
               <a
                 key={label}
                 href={`#${label.toLowerCase()}`}
-                className="text-[14px] font-medium text-[#1f4a2c] hover:text-[#4a8c3f] transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#c9962b] after:transition-all after:duration-300 hover:after:w-full"
+                className="text-[13px] font-normal tracking-wide text-[#1f4a2c]/85 hover:text-[#1f4a2c] transition-colors duration-300"
               >
                 {label}
               </a>
@@ -64,19 +64,19 @@ export default function Navbar() {
           </nav>
 
           {/* Right actions */}
-          <div className="flex items-center gap-2">
-            <div className="grid place-items-center h-10 w-10 rounded-full bg-white/50 hover:bg-white/80 text-[#1f4a2c] transition-colors duration-200 border border-white/60">
+          <div className="flex items-center gap-1.5">
+            <div className="grid place-items-center h-10 w-10 rounded-full text-[#1f4a2c] hover:bg-white/50 transition-colors duration-300">
               <CartDrawer />
             </div>
 
             <a href="#products" className="hidden sm:inline-flex">
               <button
-                className={`rounded-full text-white font-medium transition-all duration-300 hover:shadow-lg hover:scale-[1.03] ${
-                  scrolled ? "px-4 py-2 text-[13px]" : "px-5 py-2.5 text-[14px]"
+                className={`rounded-full text-white font-medium tracking-wide transition-all duration-500 hover:scale-[1.02] ${
+                  scrolled ? "px-4 py-2 text-[12.5px]" : "px-5 py-2.5 text-[13px]"
                 }`}
                 style={{
                   backgroundColor: "#4a8c3f",
-                  boxShadow: "0 6px 18px -6px rgba(74,140,63,0.55)",
+                  boxShadow: "0 4px 14px -6px rgba(74,140,63,0.45)",
                 }}
               >
                 Shop Now

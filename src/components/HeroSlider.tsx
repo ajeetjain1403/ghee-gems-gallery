@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Leaf, Droplet, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Leaf } from "lucide-react";
 import slideOil from "@/assets/hero-slide-oil.jpg";
 import slideGhee from "@/assets/hero-slide-ghee.jpg";
 import slideFamily from "@/assets/hero-slide-family.jpg";
@@ -46,17 +45,13 @@ const slides: Slide[] = [
   },
 ];
 
-const trustBadges = [
-  { icon: Leaf, label: "100% Natural" },
-  { icon: Droplet, label: "Cold Pressed" },
-  { icon: ShieldCheck, label: "No Chemicals" },
-];
+const trustBadges = ["100% Natural", "Cold Pressed", "No Chemicals"];
 
 export const HeroSlider = () => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), 6000);
+    const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), 6500);
     return () => clearInterval(id);
   }, []);
 
@@ -64,7 +59,7 @@ export const HeroSlider = () => {
 
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-hero">
-      <div className="relative h-[640px] md:h-[680px] lg:h-[720px]">
+      <div className="relative h-[640px] md:h-[700px] lg:h-[760px]">
         {/* Background image with fade */}
         <AnimatePresence mode="sync">
           <motion.div
@@ -72,7 +67,7 @@ export const HeroSlider = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.1, ease: "easeInOut" }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <img
@@ -80,87 +75,86 @@ export const HeroSlider = () => {
               alt={slide.alt}
               width={1600}
               height={1200}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover scale-[1.02]"
             />
-            {/* Strong left-to-right gradient for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0f1d12]/85 via-[#0f1d12]/55 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0f1d12]/40 via-transparent to-transparent" />
+            {/* Softer, more cinematic overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0c1a10]/80 via-[#0c1a10]/45 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0c1a10]/55 via-transparent to-transparent" />
           </motion.div>
         </AnimatePresence>
 
         {/* Content */}
         <div className="container relative z-10 h-full flex items-center">
-          <div className="max-w-2xl text-background">
+          <div className="max-w-2xl">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`content-${index}`}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 backdrop-blur-md px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-white">
-                  <Leaf className="h-3.5 w-3.5" /> Premium · Organic · Pure
+                <span
+                  className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.28em] text-white/75"
+                >
+                  <Leaf className="h-3 w-3 text-[#e6b450]" />
+                  Premium · Organic · Pure
                 </span>
-                <h1 className="mt-6 font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] text-balance text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
-                  {slide.headline}{" "}
+
+                <h1 className="mt-7 font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.04] text-balance text-white">
+                  {slide.headline}
                   <span
-                    className="block italic mt-2"
-                    style={{
-                      color: "#e6b450",
-                      textShadow: "0 2px 18px rgba(0,0,0,0.35)",
-                    }}
+                    className="block italic font-light mt-2"
+                    style={{ color: "#e6b450" }}
                   >
                     {slide.highlight}
                   </span>
                 </h1>
-                <p className="mt-6 text-lg md:text-xl text-white/90 max-w-xl leading-relaxed">
+
+                <p className="mt-7 text-base md:text-lg text-white/80 max-w-lg leading-relaxed font-light">
                   {slide.subtext}
                 </p>
 
-                {/* Inline trust pills */}
-                <div className="mt-7 flex flex-wrap gap-2.5">
-                  {trustBadges.map((b) => (
-                    <span
-                      key={b.label}
-                      className="inline-flex items-center gap-2 rounded-full bg-white/12 backdrop-blur-md border border-white/25 px-3.5 py-1.5 text-xs md:text-sm font-medium text-white"
-                    >
-                      <b.icon className="h-3.5 w-3.5 text-[#e6b450]" />
-                      {b.label}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-4">
+                <div className="mt-10 flex items-center gap-6 flex-wrap">
                   <a href={slide.href}>
                     <button
-                      className="group inline-flex items-center gap-2 rounded-full px-7 py-4 text-base font-semibold text-[#1f1503] transition-all duration-300 hover:scale-[1.04] hover:shadow-2xl"
+                      className="group inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-medium text-[#1f1503] transition-all duration-500 hover:scale-[1.02]"
                       style={{
                         background: "linear-gradient(135deg, #e6b450 0%, #c9962b 100%)",
-                        boxShadow: "0 14px 40px -10px rgba(201, 150, 43, 0.6)",
+                        boxShadow: "0 10px 30px -12px rgba(201, 150, 43, 0.55)",
                       }}
                     >
                       {slide.cta}
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      <ArrowRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
                     </button>
                   </a>
+
+                  {/* Subtle inline trust line — no pills, no boxes */}
+                  <div className="hidden sm:flex items-center gap-4 text-[11px] uppercase tracking-[0.18em] text-white/65">
+                    {trustBadges.map((b, i) => (
+                      <span key={b} className="flex items-center gap-4">
+                        {i > 0 && <span className="h-1 w-1 rounded-full bg-white/30" />}
+                        {b}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
 
-        {/* Improved slide dots */}
-        <div className="absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2.5">
+        {/* Refined slide indicators */}
+        <div className="absolute bottom-10 md:bottom-14 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
           {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`h-2.5 rounded-full transition-all duration-500 ease-out ${
+              className={`h-[2px] rounded-full transition-all duration-700 ease-out ${
                 i === index
-                  ? "w-12 bg-[#e6b450] shadow-[0_0_14px_rgba(230,180,80,0.7)]"
-                  : "w-2.5 bg-white/45 hover:bg-white/80"
+                  ? "w-10 bg-[#e6b450]"
+                  : "w-5 bg-white/30 hover:bg-white/60"
               }`}
             />
           ))}
