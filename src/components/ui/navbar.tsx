@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Leaf, Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CartDrawer } from "../CartDrawer";
 import logo from "@/assets/logo.png";
@@ -9,80 +9,84 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const linkClass = `text-[14px] font-medium transition-colors duration-200 ${
-    scrolled ? "text-white/90 hover:text-white" : "text-green-900 hover:text-green-700"
-  }`;
-
   return (
     <>
-      {/* Full-width Navbar */}
+      {/* Floating pill navbar */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300"
-        style={{
-          fontFamily: '"DM Sans", system-ui, sans-serif',
-          backgroundColor: scrolled ? "rgba(26,26,15,0.92)" : "rgba(255,255,255,0.05)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          borderBottom: scrolled
-            ? "0.5px solid rgba(255,255,255,0.12)"
-            : "0.5px solid rgba(255,255,255,0.08)",
-        }}
+        className={`fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-6xl transition-all duration-300 ease-out ${
+          scrolled ? "top-3" : "top-5"
+        }`}
+        style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
       >
         <div
-          className="flex items-center justify-between transition-all duration-300"
-          style={{ padding: "18px 48px" }}
+          className={`flex items-center justify-between rounded-full border transition-all duration-300 ease-out ${
+            scrolled ? "py-2 pl-3 pr-2" : "py-2.5 pl-4 pr-2.5"
+          }`}
+          style={{
+            backgroundColor: "rgba(245, 241, 233, 0.72)",
+            backdropFilter: "blur(20px) saturate(160%)",
+            WebkitBackdropFilter: "blur(20px) saturate(160%)",
+            borderColor: "rgba(255, 255, 255, 0.55)",
+            boxShadow: scrolled
+              ? "0 12px 40px -12px rgba(20, 50, 30, 0.25), 0 2px 8px -2px rgba(20, 50, 30, 0.08)"
+              : "0 18px 50px -16px rgba(20, 50, 30, 0.28), 0 4px 12px -4px rgba(20, 50, 30, 0.10)",
+          }}
         >
-          {/* Logo on left + leaf */}
-          <a href="#home" className="flex items-center gap-2 shrink-0">
-            <span
-              className="grid place-items-center h-7 w-7 rounded-full"
-              style={{ backgroundColor: "rgba(74,140,63,0.15)" }}
-            >
-              <Leaf className="h-4 w-4" style={{ color: "#4a8c3f" }} />
-            </span>
-            <img src={logo} width={90} height={36} className="object-contain" alt="Logo" />
+          {/* Logo */}
+          <a href="#home" className="flex items-center gap-2 shrink-0 pl-1">
+            <img
+              src={logo}
+              width={96}
+              height={36}
+              className={`object-contain transition-all duration-300 ${
+                scrolled ? "h-8" : "h-9"
+              }`}
+              alt="Mahaveer Marketing"
+            />
           </a>
 
           {/* Centered nav links */}
-          <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-            <a href="#home" className={linkClass}>Home</a>
-            <a href="#products" className={linkClass}>Products</a>
-            <a href="#about" className={linkClass}>About</a>
-            <a href="#contact" className={linkClass}>Contact</a>
+          <nav className="hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
+            {["Home", "Products", "About", "Contact"].map((label) => (
+              <a
+                key={label}
+                href={`#${label.toLowerCase()}`}
+                className="text-[14px] font-medium text-[#1f4a2c] hover:text-[#4a8c3f] transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#c9962b] after:transition-all after:duration-300 hover:after:w-full"
+              >
+                {label}
+              </a>
+            ))}
           </nav>
 
           {/* Right actions */}
-          <div className="flex items-center gap-3">
-            <div
-              className={`grid place-items-center h-10 w-10 rounded-full transition-colors duration-300 ${
-                scrolled
-                  ? "bg-white/10 hover:bg-white/20 text-white"
-                  : "bg-black/5 hover:bg-black/10 text-green-900"
-              }`}
-            >
+          <div className="flex items-center gap-2">
+            <div className="grid place-items-center h-10 w-10 rounded-full bg-white/50 hover:bg-white/80 text-[#1f4a2c] transition-colors duration-200 border border-white/60">
               <CartDrawer />
             </div>
 
             <a href="#products" className="hidden sm:inline-flex">
               <button
-                className="rounded-full text-white text-[14px] font-medium px-5 py-2.5 transition-all duration-300 hover:opacity-90 hover:shadow-lg"
-                style={{ backgroundColor: "#4a8c3f", fontFamily: '"DM Sans", system-ui, sans-serif' }}
+                className={`rounded-full text-white font-medium transition-all duration-300 hover:shadow-lg hover:scale-[1.03] ${
+                  scrolled ? "px-4 py-2 text-[13px]" : "px-5 py-2.5 text-[14px]"
+                }`}
+                style={{
+                  backgroundColor: "#4a8c3f",
+                  boxShadow: "0 6px 18px -6px rgba(74,140,63,0.55)",
+                }}
               >
                 Shop Now
               </button>
             </a>
 
-            {/* Mobile menu */}
             <button
               onClick={() => setOpen(true)}
-              className={`md:hidden h-10 w-10 grid place-items-center rounded-full transition-colors ${
-                scrolled ? "text-white hover:bg-white/10" : "text-green-900 hover:bg-black/5"
-              }`}
+              className="md:hidden h-10 w-10 grid place-items-center rounded-full text-[#1f4a2c] hover:bg-white/60 transition-colors"
+              aria-label="Open menu"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -90,7 +94,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {open && (
           <>
@@ -110,16 +114,17 @@ export default function Navbar() {
               transition={{ type: "spring", stiffness: 260, damping: 25 }}
             >
               <div className="flex justify-between items-center mb-8">
-                <span className="text-lg font-semibold text-green-900">Menu</span>
+                <span className="text-lg font-semibold text-[#1f4a2c]">Menu</span>
                 <button onClick={() => setOpen(false)}>
-                  <X className="h-6 w-6 text-green-900" />
+                  <X className="h-6 w-6 text-[#1f4a2c]" />
                 </button>
               </div>
-              <div className="flex flex-col gap-5 text-green-900 text-base font-medium">
-                <a href="#home" onClick={() => setOpen(false)}>Home</a>
-                <a href="#products" onClick={() => setOpen(false)}>Products</a>
-                <a href="#about" onClick={() => setOpen(false)}>About</a>
-                <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
+              <div className="flex flex-col gap-5 text-[#1f4a2c] text-base font-medium">
+                {["Home", "Products", "About", "Contact"].map((label) => (
+                  <a key={label} href={`#${label.toLowerCase()}`} onClick={() => setOpen(false)}>
+                    {label}
+                  </a>
+                ))}
               </div>
               <div className="flex-1" />
               <a href="#products" onClick={() => setOpen(false)}>
