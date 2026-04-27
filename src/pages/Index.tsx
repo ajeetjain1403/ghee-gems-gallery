@@ -36,6 +36,7 @@ const Index = () => {
   const [brand, setBrand] = useState("All Brands");
   const [query, setQuery] = useState("");
   const { add } = useCart();
+  const { data: products = [], isLoading } = useProducts();
 
   const handleAdd = (p: Product) => {
     add({ id: p.id, name: p.name, brand: p.brand, size: p.size, price: p.price, img: p.img });
@@ -55,7 +56,7 @@ const Index = () => {
         p.size.toLowerCase().includes(q)
       );
     });
-  }, [cat, brand, query]);
+  }, [cat, brand, query, products]);
 
   return (
     <div className="min-h-screen bg-background">
