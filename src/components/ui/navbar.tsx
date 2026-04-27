@@ -52,7 +52,7 @@ export default function Navbar() {
 
           {/* Centered nav links */}
           <nav className="hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
-            {["Home", "Products", "About", "Contact"].map((label) => (
+            {["Home", "Products", "About", "Contact Us"].map((label) => (
               <a
                 key={label}
                 href={`#${label.toLowerCase()}`}

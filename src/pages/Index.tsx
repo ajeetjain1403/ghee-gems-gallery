@@ -16,6 +16,7 @@ import pCorn from "@/assets/product-corn.jpg";
 import pSunflower from "@/assets/product-sunflower.jpg";
 import pGhee from "@/assets/product-ghee.jpg";
 import Navbar from "@/components/ui/navbar";
+import logo from "@/assets/logo.png";
 
 const PHONE = "+919512983111";
 const WA_LINK = `https://wa.me/919512983111?text=${encodeURIComponent("Hi Mahaveer Marketing, I want to place an order")}`;
@@ -182,8 +183,8 @@ const Index = () => {
                 key={c}
                 onClick={() => setCat(c)}
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${cat === c
-                    ? "bg-primary text-primary-foreground shadow-soft"
-                    : "bg-card text-foreground hover:bg-secondary border border-border"
+                  ? "bg-primary text-primary-foreground shadow-soft"
+                  : "bg-card text-foreground hover:bg-secondary border border-border"
                   }`}
               >
                 {c}
@@ -195,8 +196,8 @@ const Index = () => {
                 key={b}
                 onClick={() => setBrand(b)}
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${brand === b
-                    ? "bg-foreground text-background"
-                    : "bg-card text-foreground hover:bg-secondary border border-border"
+                  ? "bg-foreground text-background"
+                  : "bg-card text-foreground hover:bg-secondary border border-border"
                   }`}
               >
                 {b}
@@ -374,51 +375,105 @@ const Index = () => {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="py-20 lg:py-28">
+
+
+      <section id="contact" className="py-20 lg:py-28 bg-[#f8f5ef]">
         <div className="container">
+
+          {/* Header */}
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-display text-4xl md:text-5xl font-bold">Get In Touch</h2>
-            <p className="mt-4 text-muted-foreground">
-              Ready to order? Contact us via WhatsApp or call us directly. Free
-              delivery on orders above ₹500!
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-green-900">
+              Ready to Order Fresh Oils?
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg">
+              Choose the fastest way to order. We deliver fresh, chemical-free oils directly to your home.
             </p>
           </div>
 
+          {/* Cards */}
           <div className="mt-12 grid md:grid-cols-3 gap-6">
             {[
               {
                 icon: MessageCircle,
-                title: "WhatsApp Order",
-                desc: "Quick & easy ordering",
-                cta: "Chat Now",
+                title: "Order on WhatsApp",
+                desc: "Fastest way • Instant response",
+                cta: "Chat & Order Now",
                 href: WA_LINK,
                 tone: "whatsapp",
+                highlight: true,
+                badge: "Recommended",
               },
               {
                 icon: Phone,
-                title: "Call Us",
-                desc: "+91 ${PHONE}",
+                title: "Call to Order",
+                desc: `Speak directly • +91 95129 83111`,
                 cta: "Call Now",
                 href: `tel:${PHONE}`,
                 tone: "primary",
               },
               {
                 icon: MapPin,
-                title: "Visit Store",
-                desc: "Shop No. 12, Main Market, Gujarat, India",
+                title: "Visit Our Store",
+                desc: "Devi Shyam Complex, Kankaria, Ahmedabad",
                 cta: "Get Directions",
-                href: "https://maps.google.com/",
-                tone: "outline",
+                href: "https://www.google.com/maps/dir//Mahaveer+Marketing,+2%263+no.+DevIshyam+Complex,+nr+little+star+school+juna,+Old+Dhor+Bazar,+Kankaria,+Ahmedabad,+Gujarat+380028",
+                tone: "primary",
               },
             ].map((c) => (
-              <div key={c.title} className="rounded-3xl bg-card p-8 shadow-card hover:shadow-elevated transition-shadow text-center">
-                <span className={`mx-auto grid h-14 w-14 place-items-center rounded-2xl ${c.tone === "whatsapp" ? "bg-whatsapp/15 text-whatsapp" : "bg-primary/10 text-primary"}`}>
+              <div
+                key={c.title}
+                className={`relative rounded-3xl p-8 text-center transition-all duration-300
+          ${c.highlight
+                    ? "bg-green-50 border border-green-200 shadow-[0_12px_40px_rgba(0,128,0,0.12)] scale-[1.02]"
+                    : "bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                  }
+          hover:-translate-y-2 hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)]`}
+              >
+
+                {/* Badge */}
+                {c.badge && (
+                  <span className="absolute top-4 right-4 text-[10px] px-2 py-1 rounded-full bg-green-700 text-white font-medium">
+                    {c.badge}
+                  </span>
+                )}
+
+                {/* Icon */}
+                <span
+                  className={`mx-auto grid h-14 w-14 place-items-center rounded-2xl ring-2
+            ${c.tone === "whatsapp"
+                      ? "bg-green-100 text-green-700 ring-green-200"
+                      : "bg-green-50 text-green-800 ring-green-100"
+                    }`}
+                >
                   <c.icon className="h-6 w-6" />
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold">{c.title}</h3>
-                <p className="mt-2 text-muted-foreground">{c.desc}</p>
-                <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="mt-5 inline-block">
-                  <Button variant={c.tone === "whatsapp" ? "whatsapp" : c.tone === "primary" ? "hero" : "outline"}>
+
+                {/* Title */}
+                <h3 className="mt-5 text-xl font-semibold text-green-900">
+                  {c.title}
+                </h3>
+
+                {/* Description */}
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {c.desc}
+                </p>
+
+                {/* CTA */}
+                <a
+                  href={c.href}
+                  target={c.href.startsWith("http") ? "_blank" : undefined}
+                  rel="noreferrer"
+                  className="mt-6 inline-block w-full"
+                >
+                  <Button
+                    className={`w-full rounded-full transition-all duration-200
+              ${c.tone === "whatsapp"
+                        ? "bg-green-700 text-white hover:bg-green-800 shadow-md hover:scale-105"
+                        : c.tone === "primary"
+                          ? "bg-green-800 text-white hover:bg-green-900"
+                          : "border border-green-700 text-green-700 hover:bg-green-50"
+                      }`}
+                  >
                     {c.cta}
                   </Button>
                 </a>
@@ -426,21 +481,36 @@ const Index = () => {
             ))}
           </div>
 
-          <p className="mt-12 text-center text-sm text-muted-foreground">
-            Free delivery on orders above ₹500 • Same day delivery available
-          </p>
+          {/* Trust Row */}
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+         
+            <span className="flex items-center gap-2">
+              ⚡ <span>Delivery Available</span>
+            </span>
+            <span className="flex items-center gap-2">
+              💬 <span>Quick WhatsApp Response</span>
+            </span>
+          </div>
+
         </div>
       </section>
-
       {/* Footer */}
       <footer className="border-t border-border bg-secondary/40 py-10">
         <div className="container flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-primary-foreground">
               <Droplet className="h-4 w-4" />
             </span>
             <span className="font-display font-bold text-foreground">Mahaveer Marketing</span>
-          </div>
+          </div> */}
+
+            <img
+                        src={logo}
+                        width={96}
+                        height={36}
+                        className={`object-contain transition-all duration-300`}
+                        alt="Mahaveer Marketing"
+                      />
           <p>© {new Date().getFullYear()} Mahaveer Marketing. All rights reserved.</p>
         </div>
       </footer>
