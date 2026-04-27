@@ -1,20 +1,14 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X, Plus, Leaf, Sparkles, Zap } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X, Plus, Leaf, Sparkles, Zap, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CartDrawer } from "@/components/CartDrawer";
 import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
 import { HeroSlider } from "@/components/HeroSlider";
 import { useCart } from "@/hooks/use-cart";
+import { useProducts, type Product } from "@/hooks/use-products";
 import { toast } from "@/hooks/use-toast";
 import store from "@/assets/store.jpg";
-import pCotton from "@/assets/product-cottonseed.jpg";
-import pGroundnut from "@/assets/product-groundnut.jpg";
-import pCorn from "@/assets/product-corn.jpg";
-import pSunflower from "@/assets/product-sunflower.jpg";
-import pGhee from "@/assets/product-ghee.jpg";
 import Navbar from "@/components/ui/navbar";
 import logo from "@/assets/logo.png";
 
