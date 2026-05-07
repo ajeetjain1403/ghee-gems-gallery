@@ -26,6 +26,7 @@ export type Product = {
   price: string; // formatted "₹2,280"
   priceNumber: number;
   img: string;
+  images: string[];
   benefit: string;
   badges: string[];
   isBestSeller: boolean;
