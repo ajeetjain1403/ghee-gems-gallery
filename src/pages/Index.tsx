@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
 import { HeroSlider } from "@/components/HeroSlider";
+import { ProductImageCarousel } from "@/components/ProductImageCarousel";
 import { useCart } from "@/hooks/use-cart";
 import { useProducts, type Product } from "@/hooks/use-products";
 import { toast } from "@/hooks/use-toast";
@@ -187,14 +188,7 @@ const Index = () => {
                     <span className="absolute top-3 right-3 z-10 rounded-full bg-card/95 backdrop-blur px-2.5 py-1 text-[11px] font-semibold text-foreground shadow-soft">
                       {p.size}
                     </span>
-                    <img
-                      src={p.img}
-                      alt={p.name}
-                      loading="lazy"
-                      width={768}
-                      height={768}
-                      className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                    />
+                    <ProductImageCarousel images={p.images} alt={p.name} />
                   </div>
 
                   <div className="mt-5 flex items-center justify-between">
