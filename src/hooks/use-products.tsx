@@ -50,20 +50,24 @@ export const useProducts = () => {
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
       if (error) throw error;
-      return (data ?? []).map((p) => ({
-        id: p.id as number,
-        name: p.name,
-        brand: p.brand,
-        category: p.category,
-        type: p.type,
-        size: p.size,
-        priceNumber: Number(p.price),
-        price: formatINR(Number(p.price)),
-        img: resolveImg(p.image_url),
-        benefit: p.benefit ?? "Pure & wholesome goodness",
-        badges: (p.badges ?? []) as string[],
-        isBestSeller: !!p.is_best_seller,
-      }));
+      return (data ?? []).map((p) => {
+        const urls = (p.image_urls ?? []) as string[];
+        const primary = urls[0] ?? p.image_url ?? null;
+        return {
+          id: p.id as number,
+          name: p.name,
+          brand: p.brand,
+          category: p.category,
+          type: p.type,
+          size: p.size,
+          priceNumber: Number(p.price),
+          price: formatINR(Number(p.price)),
+          img: resolveImg(primary),
+          benefit: p.benefit ?? "Pure & wholesome goodness",
+          badges: (p.badges ?? []) as string[],
+          isBestSeller: !!p.is_best_seller,
+        };
+      });
     },
   });
 };
