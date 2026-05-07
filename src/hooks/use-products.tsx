@@ -26,6 +26,7 @@ export type Product = {
   price: string; // formatted "₹2,280"
   priceNumber: number;
   img: string;
+  images: string[];
   benefit: string;
   badges: string[];
   isBestSeller: boolean;
@@ -53,6 +54,7 @@ export const useProducts = () => {
       return (data ?? []).map((p) => {
         const urls = (p.image_urls ?? []) as string[];
         const primary = urls[0] ?? p.image_url ?? null;
+        const allImages = (urls.length ? urls : [primary]).filter(Boolean).map((u) => resolveImg(u as string));
         return {
           id: p.id as number,
           name: p.name,
@@ -63,6 +65,7 @@ export const useProducts = () => {
           priceNumber: Number(p.price),
           price: formatINR(Number(p.price)),
           img: resolveImg(primary),
+          images: allImages,
           benefit: p.benefit ?? "Pure & wholesome goodness",
           badges: (p.badges ?? []) as string[],
           isBestSeller: !!p.is_best_seller,
