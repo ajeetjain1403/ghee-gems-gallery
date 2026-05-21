@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { X, Plus, Loader2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 export type ProductFormValues = {
   name: string;
@@ -42,10 +43,12 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
     is_active: initial?.is_active ?? true,
     sort_order: initial?.sort_order ?? 0,
   });
+  const fileInputRef = useRef(null);
   const [imgInput, setImgInput] = useState("");
   const [badgeInput, setBadgeInput] = useState("");
   const [busy, setBusy] = useState(false);
-
+  const cloudinaryUploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+  const cloudinaryCloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const update = <K extends keyof ProductFormValues>(k: K, v: ProductFormValues[K]) =>
     setValues((p) => ({ ...p, [k]: v }));
 
@@ -57,8 +60,11 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
     setImgInput("");
   };
 
-  const removeImage = (url: string) =>
+  const removeImage = (url: string) => {
+
     update("image_urls", values.image_urls.filter((u) => u !== url));
+
+  }
 
   const addBadge = () => {
     const b = badgeInput.trim();
@@ -77,6 +83,36 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
     } finally {
       setBusy(false);
     }
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", cloudinaryUploadPreset);
+    fetch(
+      `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""; // Clears the selected file(s)
+        }
+        if(data.error){
+          console.error("Cloudinary error:", data.error);
+          toast({ title: "Image upload failed", description: data.error.message, variant: "destructive" });
+          return;
+        }
+        update("image_urls", [...values.image_urls, data.secure_url]);
+        
+      })
   };
 
   return (
@@ -109,20 +145,14 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
       <div>
         <Label className="mb-2 block">Image URLs</Label>
         <div className="flex gap-2">
-          <Input
-            placeholder="https://..."
-            value={imgInput}
-            onChange={(e) => setImgInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addImage(); } }}
-          />
-          <Button type="button" variant="outline" onClick={addImage}><Plus className="w-4 h-4" /></Button>
+          <Input ref={fileInputRef} type="file" onChange={handleFileUpload} />
         </div>
         {values.image_urls.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
             {values.image_urls.map((url, i) => (
               <div key={url} className="relative group rounded-lg overflow-hidden border bg-muted aspect-square">
-                <img src={url} alt={`Product ${i + 1}`} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.3"; }} />
-                <button type="button" onClick={() => removeImage(url)} className="absolute top-1 right-1 bg-background/90 rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+                <img src={url} alt={`Product ${i + 1}`} className="w-full h-full object-contain" onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.3"; }} />
+                <button type="button" onClick={() => removeImage(url)} className="absolute top-1 right-1 bg-background-black rounded-full p-1 ">
                   <X className="w-3 h-3" />
                 </button>
                 {i === 0 && <span className="absolute bottom-1 left-1 text-[10px] bg-background/90 px-1.5 py-0.5 rounded">Primary</span>}
