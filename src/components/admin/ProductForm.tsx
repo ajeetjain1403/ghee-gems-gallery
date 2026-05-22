@@ -50,15 +50,51 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
   const cloudinaryUploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const cloudinaryCloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const [loading, setLoading] = useState(false);
+  const [loadingAddUrl, setLoadingAddUrl] = useState(false);
   const update = <K extends keyof ProductFormValues>(k: K, v: ProductFormValues[K]) =>
     setValues((p) => ({ ...p, [k]: v }));
 
-  const addImage = () => {
+  const addImage = async () => {
     const url = imgInput.trim();
     if (!url) return;
     if (values.image_urls.includes(url)) return;
-    update("image_urls", [...values.image_urls, url]);
-    setImgInput("");
+    setLoadingAddUrl(true);
+    const formData = new FormData();
+
+    formData.append(
+      "file",
+      url
+    );
+
+    formData.append("upload_preset", cloudinaryUploadPreset);
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if(data.error) {
+        console.error("Cloudinary error:", data.error);
+        toast({ title: "Image upload failed", description: data.error.message, variant: "destructive" });
+        return;
+      } 
+      console.log(data.secure_url);
+      update("image_urls", [...values.image_urls, data.secure_url]);
+      setImgInput("");
+
+    } catch (error) {
+      console.error("Upload error:", error);
+      setImgInput("");
+      toast({ title: "Image upload failed", description: error.message, variant: "destructive" });
+    } finally {
+      setLoadingAddUrl(false);
+    } 
+
   };
 
   const removeImage = (url: string) => {
@@ -152,6 +188,18 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
 
       <div>
         <Label className="mb-2 block">Image URLs</Label>
+        <div className="flex gap-2">
+          <Input
+            placeholder="https://..."
+            value={imgInput}
+            onChange={(e) => setImgInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addImage(); } }}
+          />
+         <Button type="button" variant="outline" disabled={loadingAddUrl} onClick={addImage}>{loadingAddUrl ? <Loader2 className="h-4 w-4 animate-spin" /> :<Plus className="w-4 h-4" /> }</Button>
+        </div>
+
+        <div className="text-sm text-muted-foreground my-2 flex justify-center">Or</div>
+
         <div className="flex items-center gap-2 relative">
           <Input ref={fileInputRef} accept="image/*" type="file" onChange={handleFileUpload} />
           {loading && (
