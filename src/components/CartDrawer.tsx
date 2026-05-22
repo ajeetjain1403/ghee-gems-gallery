@@ -113,9 +113,6 @@ export const CartDrawer = () => {
                 <span className="text-muted-foreground">Subtotal</span>
                 <span className="font-display text-2xl font-bold">{formatINR(subtotal)}</span>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Final total confirmed on WhatsApp. Free delivery on orders above ₹500.
-              </p>
               <CustomerDetailsDialog
                 buildOrderLines={buildOrderLines}
                 onSubmitted={clear}
