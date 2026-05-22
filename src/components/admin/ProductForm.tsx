@@ -49,6 +49,7 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
   const [busy, setBusy] = useState(false);
   const cloudinaryUploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const cloudinaryCloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const [loading, setLoading] = useState(false);
   const update = <K extends keyof ProductFormValues>(k: K, v: ProductFormValues[K]) =>
     setValues((p) => ({ ...p, [k]: v }));
 
@@ -88,10 +89,12 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setLoading(true);
 
     const formData = new FormData();
 
     formData.append("file", file);
+
     formData.append("upload_preset", cloudinaryUploadPreset);
     fetch(
       `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`,
@@ -102,17 +105,22 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
     )
       .then((response) => response.json())
       .then((data) => {
-        if (fileInputRef.current) {
-          fileInputRef.current.value = ""; // Clears the selected file(s)
-        }
-        if(data.error){
+
+        if (data.error) {
           console.error("Cloudinary error:", data.error);
           toast({ title: "Image upload failed", description: data.error.message, variant: "destructive" });
           return;
         }
-        update("image_urls", [...values.image_urls, data.secure_url]);
-        
-      })
+        update("image_urls", [...(values.image_urls || []), data.secure_url]);
+      }).catch((error) => {
+        console.error("Upload error:", error);
+        toast({ title: "Image upload failed", description: error.message, variant: "destructive" });
+      }).finally(() => {
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""; // Clears the selected file(s)
+        }
+        setLoading(false);
+      });
   };
 
   return (
@@ -144,8 +152,13 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
 
       <div>
         <Label className="mb-2 block">Image URLs</Label>
-        <div className="flex gap-2">
-          <Input ref={fileInputRef} type="file" onChange={handleFileUpload} />
+        <div className="flex items-center gap-2 relative">
+          <Input ref={fileInputRef} accept="image/*" type="file" onChange={handleFileUpload} />
+          {loading && (
+            <div className="flex justify-center absolute right-2">
+              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+            </div>
+          )}
         </div>
         {values.image_urls.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
