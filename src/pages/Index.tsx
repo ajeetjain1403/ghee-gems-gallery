@@ -47,8 +47,8 @@ const Index = () => {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return products.filter((p) => {
-      if (cat !== "All" && p.category !== cat) return false;
-      if (brand !== "All Brands" && p.brand !== brand) return false;
+      if (cat !== "All" && p.category.trim().toLowerCase() !== cat.trim().toLowerCase()) return false;
+      if (brand !== "All Brands" && p.brand.trim().toLowerCase() !== brand.trim().toLowerCase()) return false;
       if (!q) return true;
       return (
         p.name.toLowerCase().includes(q) ||
@@ -58,7 +58,8 @@ const Index = () => {
       );
     });
   }, [cat, brand, query, products]);
-
+  console.log(products);
+console.log({ filtered });
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
