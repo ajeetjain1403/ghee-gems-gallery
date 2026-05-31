@@ -1,20 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import pCotton from "@/assets/product-cottonseed.jpg";
-import pGroundnut from "@/assets/product-groundnut.jpg";
-import pCorn from "@/assets/product-corn.jpg";
-import pSunflower from "@/assets/product-sunflower.jpg";
-import pGhee from "@/assets/product-ghee.jpg";
-
-// Maps known seed asset paths to imported asset URLs.
-// For new products, use a full http(s) image URL in the database.
-const ASSET_MAP: Record<string, string> = {
-  "/src/assets/product-cottonseed.jpg": pCotton,
-  "/src/assets/product-groundnut.jpg": pGroundnut,
-  "/src/assets/product-corn.jpg": pCorn,
-  "/src/assets/product-sunflower.jpg": pSunflower,
-  "/src/assets/product-ghee.jpg": pGhee,
-};
 
 export type Product = {
   id: number;
@@ -36,8 +21,6 @@ const formatINR = (n: number) =>
   `₹${Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
 
 const resolveImg = (url: string | null) => {
-  if (!url) return pCotton;
-  if (ASSET_MAP[url]) return ASSET_MAP[url];
   return url; // assume external URL
 };
 
