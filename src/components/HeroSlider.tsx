@@ -17,6 +17,7 @@ type Slide = {
   subtext: string;
   cta: string;
   href: string;
+  trustBadges?: string[];
 };
 
 const slides: Slide[] = [
@@ -24,35 +25,39 @@ const slides: Slide[] = [
     img: slideOil,
     mobileImg: slideOilMobile,
     alt: "Golden cold-pressed oil pouring into a glass jar",
-    headline: "Pure. Traditional.",
-    highlight: "Chemical-Free Oils",
-    subtext: "Cold-pressed oils sourced directly from farms for your family's health.",
+    headline: "Trusted by",
+    highlight: "10,000+ Families",
+    subtext: "Serving Ahmedabad Families with Quality and Trust for 18+ Years ",
     cta: "Shop Now",
     href: "#products",
+    trustBadges: ["Groundnut Oil", "Sunflower Oil", "Cottonseed Oil", "Blended Oils"],
+
   },
   {
     img: slideGhee,
     mobileImg: slideGhee,
     alt: "Rustic glass jar of pure desi cow ghee",
-    headline: "Authentic",
-    highlight: "Desi Ghee",
-    subtext: "Made using the traditional bilona method for rich taste and nutrition.",
+    headline: "From Trusted Brands to",
+    highlight: "Your Kitchen",
+    subtext: "Premium Edible Oils & Pure Ghee for Every Home",
     cta: "Explore Ghee",
     href: "#products",
+    trustBadges: ["Direct Company Sourcing", "Genuine Products", "Competitive Prices"],
+
   },
   {
     img: slideFamily,
     mobileImg: slideFamilyMobile,
     alt: "Happy family cooking together with pure oils",
-    headline: "Trusted by",
-    highlight: "10,000+ Families",
-    subtext: "No chemicals, no preservatives — just pure, wholesome goodness.",
+    headline: "Choose Health",
+    highlight: "Choose Purity",
+    subtext: "Carefully Selected Products for Healthy Cooking & Better Living",
     cta: "View Products",
     href: "#products",
+    trustBadges: ["Cold Pressed Oils", "Pure Ghee", "Traditional Nutrition"],
   },
 ];
 
-const trustBadges = ["100% Natural", "Cold Pressed", "No Chemicals"];
 
 export const HeroSlider = () => {
   const [index, setIndex] = useState(0);
@@ -151,7 +156,7 @@ export const HeroSlider = () => {
                   </a>
 
                   <div className="hidden sm:flex items-center gap-4 text-[11px] uppercase tracking-[0.18em] text-white/65">
-                    {trustBadges.map((b, i) => (
+                    {slide.trustBadges.map((b, i) => (
                       <span key={b} className="flex items-center gap-4">
                         {i > 0 && <span className="h-1 w-1 rounded-full bg-white/30" />}
                         {b}

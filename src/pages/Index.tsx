@@ -9,7 +9,7 @@ import { ProductImageCarousel } from "@/components/ProductImageCarousel";
 import { useCart } from "@/hooks/use-cart";
 import { useProducts, type Product } from "@/hooks/use-products";
 import { toast } from "@/hooks/use-toast";
-import store from "@/assets/store.jpg";
+import store from "@/assets/store.jpeg";
 import Navbar from "@/components/ui/navbar";
 import logo from "@/assets/logo.png";
 
@@ -58,8 +58,7 @@ const Index = () => {
       );
     });
   }, [cat, brand, query, products]);
-  console.log(products);
-console.log({ filtered });
+
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
@@ -176,8 +175,8 @@ console.log({ filtered });
                   key={p.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.05 }}
+                  viewport={{ once: true, margin: "120px 0px" }}
+                  transition={{ duration: 0.35, delay: (i % 6) * 0.03 }}
                   className="group flex flex-col rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40"
                 >
                   <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
