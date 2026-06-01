@@ -125,7 +125,7 @@ export const HeroSlider = () => {
               >
                 <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.28em] text-white/75">
                   <Leaf className="h-3 w-3 text-[#e6b450]" />
-                  Premium · Organic · Pure
+                  Trust · Quality · Purity
                 </span>
 
                 <h1 className="mt-4 md:mt-7 font-display text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.04] text-balance text-white">
