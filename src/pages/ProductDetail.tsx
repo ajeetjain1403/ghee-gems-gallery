@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Plus, Leaf, Sparkles, Droplet, Zap, ShieldCheck, Truck, Star, ArrowRight, Loader2, Phone } from "lucide-react";
@@ -33,7 +33,7 @@ const ProductDetail = () => {
   const { add } = useCart();
   const { data: products = [], isLoading } = useProducts();
   const [added, setAdded] = useState(false);
-
+  const ref = useRef<HTMLDivElement>(null);
   const product = useMemo(() => {
     return products.find((p) => String(p.id) === id);
   }, [products, id]);
@@ -77,8 +77,12 @@ const ProductDetail = () => {
 
   const cardBadges = getProductBadges(product);
 
+  useEffect(()=>{
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  },[])
+
   return (
-    <div className="min-h-screen bg-background">
+    <div ref={ref} className="min-h-screen bg-background">
       <Navbar />
 
 
