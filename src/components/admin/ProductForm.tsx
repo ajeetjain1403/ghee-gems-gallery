@@ -182,6 +182,9 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
         <Field label="Price (₹)" required>
           <Input type="number" step="0.01" min="0" value={values.price} onChange={(e) => update("price", parseFloat(e.target.value) || 0)} required />
         </Field>
+        <Field label="Stock" required>
+          <Input type="number" min="0" value={values.stock} onChange={(e) => update("stock", parseInt(e.target.value) || 0)} required />
+        </Field>
       </div>
 
       <Field label="Benefit / short description">
