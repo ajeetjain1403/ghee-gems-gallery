@@ -202,7 +202,7 @@ const Index = () => {
                     <span className="text-[8px] lg:text-[11px] font-medium text-muted-foreground">{p.category}</span>
                   </div>
 
-                  <h3 className="mt-2 font-display text-[10px] lg:text-lg font-semibold leading-snug lg:line-clamp-2 min-h-[3.25rem]">
+                  <h3 className="mt-2 font-display text-[10px] lg:text-lg font-semibold leading-snug lg:line-clamp-2 min-h-[2.5rem] lg:min-h-[3.25rem]">
                     {p.name}
                   </h3>
 
@@ -223,7 +223,7 @@ const Index = () => {
                     ))}
                   </div>
 
-                  <div className="mt-1 lg:mt-4 flex items-end justify-between border-t border-border/60 pt-4">
+                  <div className="mt-1 lg:mt-4 flex items-end justify-between border-t border-border/60 lg:pt-4">
                     <div>
                       <p className="font-display lg:text-2xl font-bold leading-none mt-1">{p.price}</p>
                     </div>
