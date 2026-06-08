@@ -170,7 +170,7 @@ const Index = () => {
             </div>
           )}
 
-          <div className="mt-6 grid grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-6 grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6">
             {filtered.map((p, i) => {
               const cardBadges = getProductBadges(p);
               const benefit = p.benefit;
@@ -183,7 +183,7 @@ const Index = () => {
                   viewport={{ once: true, margin: "120px 0px" }}
                   transition={{ duration: 0.35, delay: (i % 6) * 0.03 }}
                   onClick={() => navigate(`/product/${p.id}`)}
-                  className="group flex flex-col rounded-3xl bg-card p-1.5 lg:p-5 lg:shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40 cursor-pointer"
+                  className="group flex flex-col rounded-3xl bg-card p-3.5 lg:p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40 cursor-pointer"
                 >
                   <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
                     {isBestSeller && (
