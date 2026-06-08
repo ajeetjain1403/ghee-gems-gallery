@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, Truck, Phone, MapPin, Droplet, Star, ArrowRight, Search, X, Plus, Leaf, Sparkles, Zap, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
