@@ -30,6 +30,7 @@ export type Database = {
           price: number
           size: string
           sort_order: number
+          stock: number
           type: string
           updated_at: string
         }
@@ -48,6 +49,7 @@ export type Database = {
           price: number
           size: string
           sort_order?: number
+          stock?: number
           type: string
           updated_at?: string
         }
@@ -66,6 +68,7 @@ export type Database = {
           price?: number
           size?: string
           sort_order?: number
+          stock?: number
           type?: string
           updated_at?: string
         }
