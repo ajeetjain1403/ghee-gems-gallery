@@ -14,6 +14,7 @@ export type ProductFormValues = {
   type: string;
   size: string;
   price: number;
+  stock: number;
   benefit: string;
   badges: string[];
   image_urls: string[];
