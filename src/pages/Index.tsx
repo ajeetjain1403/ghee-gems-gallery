@@ -182,7 +182,8 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "120px 0px" }}
                   transition={{ duration: 0.35, delay: (i % 6) * 0.03 }}
-                  className="group flex flex-col rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40"
+                  onClick={() => navigate(`/product/${p.id}`)}
+                  className="group flex flex-col rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40 cursor-pointer"
                 >
                   <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
                     {isBestSeller && (
