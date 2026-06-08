@@ -187,7 +187,7 @@ const Index = () => {
                 >
                   <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
                     {isBestSeller && (
-                      <span className="absolute bottom-1 lg:top-3 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-primary text-primary-foreground px-3 py-1 text-[11px] font-semibold shadow-soft">
+                      <span className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-primary text-primary-foreground px-3 py-1 text-[5px] lg:text-[11px] font-semibold shadow-soft">
                         <Sparkles className="h-3 w-3" /> Best Seller
                       </span>
                     )}
