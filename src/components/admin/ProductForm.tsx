@@ -14,6 +14,7 @@ export type ProductFormValues = {
   type: string;
   size: string;
   price: number;
+  stock: number;
   benefit: string;
   badges: string[];
   image_urls: string[];
@@ -36,6 +37,7 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
     type: initial?.type ?? "",
     size: initial?.size ?? "",
     price: initial?.price ?? 0,
+    stock: initial?.stock ?? 0,
     benefit: initial?.benefit ?? "",
     badges: initial?.badges ?? [],
     image_urls: initial?.image_urls ?? [],
@@ -179,6 +181,9 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
         </Field>
         <Field label="Price (₹)" required>
           <Input type="number" step="0.01" min="0" value={values.price} onChange={(e) => update("price", parseFloat(e.target.value) || 0)} required />
+        </Field>
+        <Field label="Stock" required>
+          <Input type="number" min="0" value={values.stock} onChange={(e) => update("stock", parseInt(e.target.value) || 0)} required />
         </Field>
       </div>
 
