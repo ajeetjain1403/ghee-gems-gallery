@@ -7,6 +7,7 @@ import { CartProvider } from "@/hooks/use-cart";
 import { AuthProvider } from "@/hooks/use-auth";
 import { AdminGuard } from "@/components/admin/AdminGuard";
 import Index from "./pages/Index.tsx";
+import ProductDetail from "./pages/ProductDetail.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Auth from "./pages/Auth.tsx";
 import AdminLayout from "./pages/admin/AdminLayout.tsx";
