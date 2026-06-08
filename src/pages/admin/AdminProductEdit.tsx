@@ -49,6 +49,7 @@ const AdminProductEdit = () => {
     type: data.type,
     size: data.size,
     price: Number(data.price),
+    stock: Number((data as any).stock ?? 0),
     benefit: data.benefit ?? "",
     badges: (data.badges ?? []) as string[],
     image_urls: ((data.image_urls ?? []) as string[]).length > 0
