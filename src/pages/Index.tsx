@@ -170,7 +170,7 @@ const Index = () => {
             </div>
           )}
 
-          <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-6 grid grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((p, i) => {
               const cardBadges = getProductBadges(p);
               const benefit = p.benefit;
@@ -183,11 +183,11 @@ const Index = () => {
                   viewport={{ once: true, margin: "120px 0px" }}
                   transition={{ duration: 0.35, delay: (i % 6) * 0.03 }}
                   onClick={() => navigate(`/product/${p.id}`)}
-                  className="group flex flex-col rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40 cursor-pointer"
+                  className="group flex flex-col rounded-3xl bg-card lg:p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40 cursor-pointer"
                 >
                   <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
                     {isBestSeller && (
-                      <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-primary text-primary-foreground px-3 py-1 text-[11px] font-semibold shadow-soft">
+                      <span className="absolute bottom-1 lg:top-3 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-primary text-primary-foreground px-3 py-1 text-[11px] font-semibold shadow-soft">
                         <Sparkles className="h-3 w-3" /> Best Seller
                       </span>
                     )}
@@ -198,20 +198,20 @@ const Index = () => {
                   </div>
 
                   <div className="mt-5 flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-primary">{p.brand}</span>
-                    <span className="text-[11px] font-medium text-muted-foreground">{p.category}</span>
+                    <span className="text-[8px] lg:text-[11px] font-bold uppercase tracking-[0.15em] text-primary">{p.brand}</span>
+                    <span className="text-[8px] lg:text-[11px] font-medium text-muted-foreground">{p.category}</span>
                   </div>
 
-                  <h3 className="mt-2 font-display text-lg font-semibold leading-snug line-clamp-2 min-h-[3.25rem]">
+                  <h3 className="mt-2 font-display text-[10px] lg:text-lg font-semibold leading-snug lg:line-clamp-2 min-h-[3.25rem]">
                     {p.name}
                   </h3>
 
-                  <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-                    <Leaf className="h-3.5 w-3.5 text-primary shrink-0" />
+                  <p className="mt-2 hidden lg:flex items-center gap-1.5 text-[8px] lg:text-sm text-muted-foreground">
+                    <Leaf className="h-2.5 w-2.5 lg:h-3.5 lg:w-3.5 text-primary shrink-0" />
                     <span className="line-clamp-1">{benefit}</span>
                   </p>
 
-                  <div className="mt-3 flex flex-wrap gap-1.5">
+                  <div className="mt-3 hidden lg:flex flex-wrap gap-1.5">
                     {cardBadges.map((b) => (
                       <span
                         key={b.label}
@@ -223,23 +223,22 @@ const Index = () => {
                     ))}
                   </div>
 
-                  <div className="mt-4 flex items-end justify-between border-t border-border/60 pt-4">
+                  <div className="mt-1 lg:mt-4 flex items-end justify-between border-t border-border/60 pt-4">
                     <div>
-                      <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Price</p>
-                      <p className="font-display text-2xl font-bold leading-none mt-1">{p.price}</p>
+                      <p className="font-display lg:text-2xl font-bold leading-none mt-1">{p.price}</p>
                     </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-medium text-primary">
+                    <span className="inline-flex items-center gap-1 text-[8px] lg:text-xs font-medium text-primary">
                       <Zap className="h-3.5 w-3.5" /> In Stock
                     </span>
                   </div>
 
-                  <div className="mt-4 grid grid-cols-2 gap-2">
+                  <div className="mt-4 grid lg:grid-cols-2 gap-2">
                     <Button
                       variant="hero"
                       onClick={(e) => { e.stopPropagation(); handleAdd(p); }}
-                      className="w-full"
+                      className="w-full text-[8px] lg:text-base flex items-center justify-center gap-2"
                     >
-                      <Plus className="h-4 w-4" /> Add to Cart
+                      <Plus className="h-2 w-2 lg:h-4 lg:w-4" /> Add to Cart
                     </Button>
                     <div onClick={(e) => e.stopPropagation()}>
                       <CustomerDetailsDialog
@@ -252,7 +251,7 @@ const Index = () => {
                           `Subtotal: ${p.price}`,
                         ]}
                         trigger={
-                          <Button variant="outline-hero" className="w-full">
+                          <Button variant="outline-hero" className="w-full text-[8px] lg:text-base">
                             Buy Now <ArrowRight className="h-4 w-4" />
                           </Button>
                         }

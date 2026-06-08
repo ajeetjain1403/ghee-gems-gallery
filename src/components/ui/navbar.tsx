@@ -38,7 +38,7 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2 shrink-0 pl-1">
+          <a href="/" className="flex items-center gap-2 shrink-0 pl-1">
             <img
               src={logo}
               width={96}

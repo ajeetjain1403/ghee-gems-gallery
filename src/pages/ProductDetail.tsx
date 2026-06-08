@@ -81,19 +81,9 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Breadcrumb */}
-      <div className="container pt-6 pb-2">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-          <span>/</span>
-          <Link to="/#products" className="hover:text-primary transition-colors">Products</Link>
-          <span>/</span>
-          <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
-        </div>
-      </div>
 
       {/* Product Hero */}
-      <section className="container py-8 lg:py-12">
+      <section className="container py-20 lg:py-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
