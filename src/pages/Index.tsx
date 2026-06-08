@@ -38,6 +38,7 @@ const Index = () => {
   const [cat, setCat] = useState("All");
   const [brand, setBrand] = useState("All Brands");
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   const { add } = useCart();
   const { data: products = [], isLoading } = useProducts();
 
