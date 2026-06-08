@@ -17,7 +17,7 @@ export const ProductImageCarousel = ({ images, alt }: Props) => {
   };
 
   return (
-    <>
+    <div onClick={(e) => e.stopPropagation()}>
       <Carousel opts={{ loop: true }} className="h-full w-full">
         <CarouselContent className="ml-0 h-full">
           {imgs.map((src, idx) => (
@@ -47,6 +47,6 @@ export const ProductImageCarousel = ({ images, alt }: Props) => {
           )}
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 };
