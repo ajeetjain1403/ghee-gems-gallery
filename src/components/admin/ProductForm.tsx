@@ -37,6 +37,7 @@ export const ProductForm = ({ initial, onSubmit, submitLabel = "Save" }: Props) 
     type: initial?.type ?? "",
     size: initial?.size ?? "",
     price: initial?.price ?? 0,
+    stock: initial?.stock ?? 0,
     benefit: initial?.benefit ?? "",
     badges: initial?.badges ?? [],
     image_urls: initial?.image_urls ?? [],
