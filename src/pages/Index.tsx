@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Truck, Phone, MessageCircle, MapPin, Droplet, Star, ArrowRight, Search, X, Plus, Leaf, Sparkles, Zap, Loader2 } from "lucide-react";
+import { ShieldCheck, Truck, Phone, MapPin, Droplet, Star, ArrowRight, Search, X, Plus, Leaf, Sparkles, Zap, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,11 +12,12 @@ import { toast } from "@/hooks/use-toast";
 import store from "@/assets/store.jpeg";
 import Navbar from "@/components/ui/navbar";
 import logo from "@/assets/logo.png";
+import { FaWhatsapp } from "react-icons/fa6";
 
 const PHONE = "+919512983111";
 const WA_LINK = `https://wa.me/919512983111?text=${encodeURIComponent("Hi Mahaveer Marketing, I want to place an order")}`;
 
-const brands = ["All Brands", "Tirupati", "Gulab", "Fortune"];
+const brands = ["All Brands", "Tirupati", "Gulab", "Fortune","Ankur","Saffola"];
 const categories = ["All", "Oils", "Ghee"];
 
 const BADGE_ICONS: Record<string, typeof Leaf> = {
@@ -47,8 +48,10 @@ const Index = () => {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return products.filter((p) => {
-      if (cat !== "All" && p.category.trim().toLowerCase() !== cat.trim().toLowerCase()) return false;
-      if (brand !== "All Brands" && p.brand.trim().toLowerCase() !== brand.trim().toLowerCase()) return false;
+      let category = p.category.trim().toLowerCase();
+      console.log({ cat, category, matchesCat: p.category.trim().toLowerCase().includes(cat.trim().toLowerCase()), matchesBrand: p.brand.trim().toLowerCase() === brand.trim().toLowerCase() });
+      if (cat !== "All" && !category.includes(cat.trim().toLowerCase())) return false;
+      if (brand !== "All Brands" && !p.brand.trim().toLowerCase().includes(brand.trim().toLowerCase())) return false;
       if (!q) return true;
       return (
         p.name.toLowerCase().includes(q) ||
@@ -83,7 +86,7 @@ const Index = () => {
             <CartDrawer />
             <a href={WA_LINK} target="_blank" rel="noreferrer">
               <Button variant="whatsapp" size="lg" className="hidden sm:inline-flex">
-                <MessageCircle className="h-4 w-4" /> Order via WhatsApp
+                <FaWhatsapp className="h-4 w-4" /> Order via WhatsApp
               </Button>
             </a>
           </div>
@@ -233,7 +236,8 @@ const Index = () => {
                     </Button>
                     <CustomerDetailsDialog
                       title={`Buy Now — ${p.name}`}
-                      description="Enter your delivery details and we'll send this order to WhatsApp."
+                      description={`Enter your delivery details to place your order.\nDelivery is available within 5 km only. Additional delivery charges will apply and will be shared on WhatsApp.
+`}
                       buildOrderLines={() => [
                         `1. ${p.name} (${p.size}) — 1 × ${p.price}`,
                         "",
@@ -343,7 +347,7 @@ const Index = () => {
           <div className="mt-12 grid md:grid-cols-3 gap-6">
             {[
               {
-                icon: MessageCircle,
+                icon: FaWhatsapp,
                 title: "Order on WhatsApp",
                 desc: "Fastest way • Instant response",
                 cta: "Chat & Order Now",
@@ -472,7 +476,7 @@ const Index = () => {
         aria-label="Chat on WhatsApp"
         className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-whatsapp-foreground shadow-elevated hover:scale-110 transition-transform"
       >
-        <MessageCircle className="h-6 w-6" />
+        <FaWhatsapp className="h-6 w-6" />
       </a>
     </div>
   );

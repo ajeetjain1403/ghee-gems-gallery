@@ -1,8 +1,9 @@
-import { Minus, Plus, ShoppingBag, Trash2, MessageCircle, X } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useCart, formatINR } from "@/hooks/use-cart";
 import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export const CartDrawer = () => {
   const { items, count, subtotal, setQty, remove, clear } = useCart();
@@ -120,7 +121,7 @@ export const CartDrawer = () => {
                 description="Tell us where to deliver — your full order will be sent to WhatsApp with these details."
                 trigger={
                   <Button variant="whatsapp" size="lg" className="w-full">
-                    <MessageCircle className="h-4 w-4" /> Checkout on WhatsApp
+                    <FaWhatsapp className="h-4 w-4" /> Checkout on WhatsApp
                   </Button>
                 }
               />

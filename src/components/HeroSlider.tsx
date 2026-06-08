@@ -4,6 +4,7 @@ import { ArrowRight, Leaf } from "lucide-react";
 import slideOilMobile from "@/assets/hero-oil.png";
 import slideOil from "@/assets/hero-slide-oil.png";
 import slideGhee from "@/assets/hero-slide-ghee.png";
+import slideGheeMobile from "@/assets/hero-ghee.png";
 // import slideFamily from "@/assets/hero-slide-family.jpg";
 import slideFamily from "@/assets/hero-slide-family.png";
 import slideFamilyMobile from "@/assets/hero-family.png";
@@ -35,7 +36,7 @@ const slides: Slide[] = [
   },
   {
     img: slideGhee,
-    mobileImg: slideGhee,
+    mobileImg: slideGheeMobile,
     alt: "Rustic glass jar of pure desi cow ghee",
     headline: "From Trusted Brands to",
     highlight: "Your Kitchen",

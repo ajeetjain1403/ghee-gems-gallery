@@ -1,6 +1,6 @@
 import { useState, ReactNode } from "react";
 import { z } from "zod";
-import { MessageCircle, User, Phone, MapPin, Home, Hash, StickyNote } from "lucide-react";
+import {  User, Phone, MapPin, Home, Hash, StickyNote } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { FaWhatsapp } from "react-icons/fa6";
 
 const PHONE_DIGITS = "919512983111";
 
@@ -230,7 +231,7 @@ export const CustomerDetailsDialog = ({
 
           <DialogFooter className="pt-2">
             <Button type="submit" variant="whatsapp" size="lg" className="w-full">
-              <MessageCircle className="h-4 w-4" /> Send Order on WhatsApp
+              <FaWhatsapp className="h-4 w-4" /> Send Order on WhatsApp
             </Button>
           </DialogFooter>
         </form>
