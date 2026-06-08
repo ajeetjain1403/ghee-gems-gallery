@@ -234,24 +234,30 @@ const Index = () => {
                   </div>
 
                   <div className="mt-4 grid grid-cols-2 gap-2">
-                    <Button variant="hero" onClick={() => handleAdd(p)} className="w-full">
+                    <Button
+                      variant="hero"
+                      onClick={(e) => { e.stopPropagation(); handleAdd(p); }}
+                      className="w-full"
+                    >
                       <Plus className="h-4 w-4" /> Add to Cart
                     </Button>
-                    <CustomerDetailsDialog
-                      title={`Buy Now — ${p.name}`}
-                      description={`Enter your delivery details to place your order.\nDelivery is available within 5 km only. Additional delivery charges will apply and will be shared on WhatsApp.
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <CustomerDetailsDialog
+                        title={`Buy Now — ${p.name}`}
+                        description={`Enter your delivery details to place your order.\nDelivery is available within 5 km only. Additional delivery charges will apply and will be shared on WhatsApp.
 `}
-                      buildOrderLines={() => [
-                        `1. ${p.name} (${p.size}) — 1 × ${p.price}`,
-                        "",
-                        `Subtotal: ${p.price}`,
-                      ]}
-                      trigger={
-                        <Button variant="outline-hero" className="w-full">
-                          Buy Now <ArrowRight className="h-4 w-4" />
-                        </Button>
-                      }
-                    />
+                        buildOrderLines={() => [
+                          `1. ${p.name} (${p.size}) — 1 × ${p.price}`,
+                          "",
+                          `Subtotal: ${p.price}`,
+                        ]}
+                        trigger={
+                          <Button variant="outline-hero" className="w-full">
+                            Buy Now <ArrowRight className="h-4 w-4" />
+                          </Button>
+                        }
+                      />
+                    </div>
                   </div>
                 </motion.article>
               );
