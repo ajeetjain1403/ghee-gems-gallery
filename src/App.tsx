@@ -7,6 +7,7 @@ import { CartProvider } from "@/hooks/use-cart";
 import { AuthProvider } from "@/hooks/use-auth";
 import { AdminGuard } from "@/components/admin/AdminGuard";
 import Index from "./pages/Index.tsx";
+import ProductDetail from "./pages/ProductDetail.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Auth from "./pages/Auth.tsx";
 import AdminLayout from "./pages/admin/AdminLayout.tsx";
@@ -26,6 +27,7 @@ const App = () => (
             <Sonner />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<AdminGuard><AdminLayout /></AdminGuard>}>
                 <Route index element={<AdminProducts />} />

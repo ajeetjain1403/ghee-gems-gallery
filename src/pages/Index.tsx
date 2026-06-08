@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, Truck, Phone, MapPin, Droplet, Star, ArrowRight, Search, X, Plus, Leaf, Sparkles, Zap, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
@@ -37,6 +38,7 @@ const Index = () => {
   const [cat, setCat] = useState("All");
   const [brand, setBrand] = useState("All Brands");
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   const { add } = useCart();
   const { data: products = [], isLoading } = useProducts();
 
@@ -180,7 +182,8 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "120px 0px" }}
                   transition={{ duration: 0.35, delay: (i % 6) * 0.03 }}
-                  className="group flex flex-col rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40"
+                  onClick={() => navigate(`/product/${p.id}`)}
+                  className="group flex flex-col rounded-3xl bg-card p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40 cursor-pointer"
                 >
                   <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
                     {isBestSeller && (
@@ -231,24 +234,30 @@ const Index = () => {
                   </div>
 
                   <div className="mt-4 grid grid-cols-2 gap-2">
-                    <Button variant="hero" onClick={() => handleAdd(p)} className="w-full">
+                    <Button
+                      variant="hero"
+                      onClick={(e) => { e.stopPropagation(); handleAdd(p); }}
+                      className="w-full"
+                    >
                       <Plus className="h-4 w-4" /> Add to Cart
                     </Button>
-                    <CustomerDetailsDialog
-                      title={`Buy Now — ${p.name}`}
-                      description={`Enter your delivery details to place your order.\nDelivery is available within 5 km only. Additional delivery charges will apply and will be shared on WhatsApp.
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <CustomerDetailsDialog
+                        title={`Buy Now — ${p.name}`}
+                        description={`Enter your delivery details to place your order.\nDelivery is available within 5 km only. Additional delivery charges will apply and will be shared on WhatsApp.
 `}
-                      buildOrderLines={() => [
-                        `1. ${p.name} (${p.size}) — 1 × ${p.price}`,
-                        "",
-                        `Subtotal: ${p.price}`,
-                      ]}
-                      trigger={
-                        <Button variant="outline-hero" className="w-full">
-                          Buy Now <ArrowRight className="h-4 w-4" />
-                        </Button>
-                      }
-                    />
+                        buildOrderLines={() => [
+                          `1. ${p.name} (${p.size}) — 1 × ${p.price}`,
+                          "",
+                          `Subtotal: ${p.price}`,
+                        ]}
+                        trigger={
+                          <Button variant="outline-hero" className="w-full">
+                            Buy Now <ArrowRight className="h-4 w-4" />
+                          </Button>
+                        }
+                      />
+                    </div>
                   </div>
                 </motion.article>
               );
