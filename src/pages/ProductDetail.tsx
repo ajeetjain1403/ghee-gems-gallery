@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Plus, Leaf, Sparkles, Droplet, Zap, ShieldCheck, Truck, Star, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, Plus, Leaf, Sparkles, Droplet, Zap, ShieldCheck, Truck, Star, ArrowRight, Loader2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductImageCarousel } from "@/components/ProductImageCarousel";
 import { CustomerDetailsDialog } from "@/components/CustomerDetailsDialog";
