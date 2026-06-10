@@ -15,6 +15,7 @@ export type Product = {
   benefit: string;
   badges: string[];
   isBestSeller: boolean;
+  stock: number;
 };
 
 const formatINR = (n: number) =>
@@ -52,6 +53,7 @@ export const useProducts = () => {
           benefit: p.benefit ?? "Pure & wholesome goodness",
           badges: (p.badges ?? []) as string[],
           isBestSeller: !!p.is_best_seller,
+          stock: (p.stock ?? 0) as number,
         };
       });
     },
