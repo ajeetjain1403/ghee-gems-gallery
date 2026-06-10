@@ -175,6 +175,7 @@ const Index = () => {
               const cardBadges = getProductBadges(p);
               const benefit = p.benefit;
               const isBestSeller = p.isBestSeller;
+              const outOfStock = p.stock <= 0;
               return (
                 <motion.article
                   key={p.id}
@@ -186,9 +187,14 @@ const Index = () => {
                   className="group flex flex-col rounded-3xl bg-card p-3.5 lg:p-5 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-1.5 border border-border/40 cursor-pointer"
                 >
                   <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary">
-                    {isBestSeller && (
+                    {isBestSeller && !outOfStock && (
                       <span className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-primary text-primary-foreground px-3 py-1 text-[5px] lg:text-[11px] font-semibold shadow-soft">
                         <Sparkles className="h-3 w-3" /> Best Seller
+                      </span>
+                    )}
+                    {outOfStock && (
+                      <span className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-destructive text-destructive-foreground px-3 py-1 text-[5px] lg:text-[11px] font-semibold shadow-soft">
+                        Out of Stock
                       </span>
                     )}
                     <span className="absolute top-3 right-3 z-10 rounded-full bg-card/95 backdrop-blur px-2.5 py-1 text-[11px] font-semibold text-foreground shadow-soft">
@@ -227,16 +233,23 @@ const Index = () => {
                     <div>
                       <p className="font-display lg:text-2xl font-bold leading-none mt-1">{p.price}</p>
                     </div>
-                    <span className="inline-flex items-center gap-1 text-[8px] lg:text-xs font-medium text-primary">
-                      <Zap className="h-3.5 w-3.5" /> In Stock
-                    </span>
+                    {outOfStock ? (
+                      <span className="inline-flex items-center gap-1 text-[8px] lg:text-xs font-medium text-destructive">
+                        Out of Stock
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-[8px] lg:text-xs font-medium text-green-600">
+                        <Zap className="h-3.5 w-3.5" /> In Stock
+                      </span>
+                    )}
                   </div>
 
                   <div className="mt-4 grid lg:grid-cols-2 gap-2">
                     <Button
                       variant="hero"
+                      disabled={outOfStock}
                       onClick={(e) => { e.stopPropagation(); handleAdd(p); }}
-                      className="w-full text-[8px] lg:text-base flex items-center justify-center gap-2"
+                      className="w-full text-[8px] lg:text-base flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Plus className="h-2 w-2 lg:h-4 lg:w-4" /> Add to Cart
                     </Button>
@@ -251,7 +264,7 @@ const Index = () => {
                           `Subtotal: ${p.price}`,
                         ]}
                         trigger={
-                          <Button variant="outline-hero" className="w-full text-[8px] lg:text-base">
+                          <Button variant="outline-hero" disabled={outOfStock} className="w-full text-[8px] lg:text-base disabled:opacity-50 disabled:cursor-not-allowed">
                             Buy Now <ArrowRight className="h-4 w-4" />
                           </Button>
                         }
