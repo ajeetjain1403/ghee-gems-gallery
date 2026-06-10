@@ -96,9 +96,14 @@ const ProductDetail = () => {
         >
           {/* Images */}
           <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary shadow-card border border-border/40">
-            {product.isBestSeller && (
+            {product.isBestSeller && product.stock > 0 && (
               <span className="absolute top-4 left-4 z-10 inline-flex items-center gap-1 rounded-full bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold shadow-soft">
                 <Sparkles className="h-3.5 w-3.5" /> Best Seller
+              </span>
+            )}
+            {product.stock <= 0 && (
+              <span className="absolute top-4 left-4 z-10 inline-flex items-center gap-1 rounded-full bg-destructive text-destructive-foreground px-3 py-1.5 text-xs font-semibold shadow-soft">
+                Out of Stock
               </span>
             )}
             <ProductImageCarousel images={product.images} alt={product.name} />
@@ -141,16 +146,23 @@ const ProductDetail = () => {
 
             <div className="mt-8 flex items-baseline gap-4">
               <p className="font-display text-4xl md:text-5xl font-bold text-primary">{product.price}</p>
-              <span className="inline-flex items-center gap-1 text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
-                <Zap className="h-4 w-4" /> In Stock
-              </span>
+              {product.stock <= 0 ? (
+                <span className="inline-flex items-center gap-1 text-sm font-medium text-destructive bg-destructive/10 px-3 py-1 rounded-full">
+                  Out of Stock
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                  <Zap className="h-4 w-4" /> In Stock
+                </span>
+              )}
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Button
                 variant="hero"
+                disabled={product.stock <= 0}
                 onClick={() => handleAdd(product)}
-                className="flex-1 h-14 text-base"
+                className="flex-1 h-14 text-base disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {added ? (
                   <>
@@ -171,7 +183,7 @@ const ProductDetail = () => {
                   `Subtotal: ${product.price}`,
                 ]}
                 trigger={
-                  <Button variant="outline-hero" className="flex-1 h-14 text-base">
+                  <Button variant="outline-hero" disabled={product.stock <= 0} className="flex-1 h-14 text-base disabled:opacity-50 disabled:cursor-not-allowed">
                     Buy Now <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 }
@@ -234,6 +246,11 @@ const ProductDetail = () => {
                   onClick={() => navigate(`/product/${p.id}`)}
                 >
                   <div className="relative aspect-square overflow-hidden rounded-xl bg-secondary">
+                    {p.stock <= 0 && (
+                      <span className="absolute top-2 left-2 z-10 inline-flex items-center gap-1 rounded-full bg-destructive text-destructive-foreground px-2 py-1 text-[10px] font-semibold shadow-soft">
+                        Out of Stock
+                      </span>
+                    )}
                     <img
                       src={p.img}
                       alt={p.name}
@@ -252,7 +269,8 @@ const ProductDetail = () => {
                   <Button
                     variant="hero"
                     size="sm"
-                    className="mt-3 w-full"
+                    disabled={p.stock <= 0}
+                    className="mt-3 w-full disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleAdd(p);
